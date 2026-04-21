@@ -1,0 +1,5 @@
+<svg width="338" height="400" viewBox="0 0 338 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 286.463V0H25.9488V261.687L169 357.792L312.051 261.687V0H338V286.463L169 400L0 286.463Z" fill="#D9D9D9" stroke="black"/>
+  <!-- Optional: Glass effect inside the empty tank area -->
+  <path d="M25.95 0 H312.05 V261.69 L169 357.79 L25.95 261.69 Z" fill="#ebf8ff" fill-opacity="0.1"/>
+</svg>

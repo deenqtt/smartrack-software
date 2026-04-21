@@ -1,0 +1,905 @@
+{
+  "userType": "smartrack",
+  "description": "Shared Smartrack dashboard presets",
+  "dashboards": [
+    {
+      "name": "Default Dashboard",
+      "layout": "[]",
+      "inUse": true,
+      "isActive": true
+    },
+    {
+      "name": "Smartrack Analytic",
+      "layout": [
+        {
+          "h": 12,
+          "i": "Chart-CoolingEfficiency-1769747000000",
+          "w": 12,
+          "x": 0,
+          "y": 0,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "timeRange": "24h",
+            "showLegend": true,
+            "configNames": [
+              "Cooling Return Air Temperature",
+              "Cooling Supply Air Temperature 1"
+            ],
+            "smoothLines": true,
+            "widgetTitle": "Cooling Efficiency (Return vs Supply)",
+            "showCorrelations": true
+          },
+          "static": false,
+          "widgetType": "Multi-Line Chart"
+        },
+        {
+          "h": 10,
+          "i": "Chart-PressureTrend-1769747200000",
+          "w": 6,
+          "x": 0,
+          "y": 12,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "timeRange": "24h",
+            "showLegend": true,
+            "configNames": [
+              "Vibration Axis X",
+              "Vibration Axis Y",
+              "Vibration Axis Z"
+            ],
+            "smoothLines": true,
+            "widgetTitle": "Vibration Axis Trend",
+            "showCorrelations": false
+          },
+          "static": false,
+          "widgetType": "Multi-Line Chart"
+        },
+        {
+          "h": 10,
+          "i": "Chart-HumidityTrend-1769747300000",
+          "w": 6,
+          "x": 6,
+          "y": 12,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "timeRange": "24h",
+            "showLegend": true,
+            "configNames": [
+              "Nexabrick Temp Hum 1 - Humidity",
+              "Nexabrick Temp Hum 2 - Humidity"
+            ],
+            "smoothLines": true,
+            "widgetTitle": "Rack Humidity Distribution",
+            "showCorrelations": false
+          },
+          "static": false,
+          "widgetType": "Multi-Line Chart"
+        },
+        {
+          "h": 12,
+          "i": "Chart-PowerCorrelation-1769747400000",
+          "w": 12,
+          "x": 0,
+          "y": 22,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "timeRange": "24h",
+            "showLegend": true,
+            "configNames": [
+              "UPS Load Percentage",
+              "RPDU Output Current 1"
+            ],
+            "smoothLines": true,
+            "widgetTitle": "UPS Load vs PDU Current",
+            "showCorrelations": true
+          },
+          "static": false,
+          "widgetType": "Multi-Line Chart"
+        },
+        {
+          "h": 12,
+          "i": "Chart-PueTrend-1769748400000",
+          "w": 6,
+          "x": 0,
+          "y": 34,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "timeRange": "24h",
+            "showLegend": true,
+            "configNames": [
+              "Smartrack PUE Value"
+            ],
+            "smoothLines": true,
+            "widgetTitle": "PUE Trend (24h)",
+            "showCorrelations": false
+          },
+          "static": false,
+          "widgetType": "Multi-Line Chart"
+        },
+        {
+          "h": 12,
+          "i": "Chart-ItLoadTrend-1769748500000",
+          "w": 6,
+          "x": 6,
+          "y": 34,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "timeRange": "24h",
+            "showLegend": true,
+            "configNames": [
+              "Smartrack IT Load %"
+            ],
+            "smoothLines": true,
+            "widgetTitle": "IT Load % Trend (24h)",
+            "showCorrelations": false
+          },
+          "static": false,
+          "widgetType": "Multi-Line Chart"
+        },
+        {
+          "h": 7,
+          "i": "Carbon-BillL1-1769748600000",
+          "w": 6,
+          "x": 0,
+          "y": 46,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "widgetTitle": "Carbon Emissions L1",
+            "billConfigId": "smartrack_bill_rpdu_feed_1",
+            "publishTopic": "IOT/BillCalculation/Smartrack_Rack_PDU_Bill"
+          },
+          "static": false,
+          "widgetType": "Carbon Emissions"
+        },
+        {
+          "h": 7,
+          "i": "Billing-Predictive-1769748800000",
+          "w": 6,
+          "x": 6,
+          "y": 46,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "showType": "all",
+            "widgetTitle": "Predictive Bill L1",
+            "billConfigId": "smartrack_bill_rpdu_feed_1"
+          },
+          "static": false,
+          "widgetType": "Predictive Billing"
+        },
+        {
+          "h": 14,
+          "i": "AI-Energy-Advisor-1769749900000",
+          "w": 12,
+          "x": 0,
+          "y": 53,
+          "minH": 6,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "widgetTitle": "AI Energy Advisor"
+          },
+          "static": false,
+          "widgetType": "AI Energy Advisor"
+        }
+      ],
+      "inUse": false,
+      "isActive": true
+    },
+    {
+      "name": "Smartrack Cooling",
+      "layout": [
+        {
+          "h": 6,
+          "i": "Status-CoolingStatus-1770088200000",
+          "w": 3,
+          "x": 0,
+          "y": 12,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "",
+            "iconColor": "#FFFFFF",
+            "customName": "Cooling Status",
+            "iconBgColor": "#0ea5e9",
+            "selectedKey": "ON_OFF_UNIT",
+            "deviceUniqId": "smartrack-cooling-1",
+            "selectedIcon": "Wind"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 6,
+          "i": "Gauge-ReturnTemp-1770088300000",
+          "w": 3,
+          "x": 3,
+          "y": 12,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "max": 35,
+            "min": 15,
+            "units": "°C",
+            "customName": "Return Air Temp",
+            "selectedKey": "Air_Return_Temperature",
+            "deviceUniqId": "smartrack-cooling-1",
+            "selectedIcon": "Thermometer"
+          },
+          "static": false,
+          "widgetType": "Analog Meter"
+        },
+        {
+          "h": 6,
+          "i": "Gauge-SupplyTemp-1770088400000",
+          "w": 3,
+          "x": 6,
+          "y": 12,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "max": 30,
+            "min": 10,
+            "units": "°C",
+            "customName": "Supply Air Temp",
+            "selectedKey": "Air_Outlet_Temperature",
+            "deviceUniqId": "smartrack-cooling-1",
+            "selectedIcon": "Thermometer"
+          },
+          "static": false,
+          "widgetType": "Analog Meter"
+        },
+        {
+          "h": 6,
+          "i": "Gauge-ReturnHum-1770088500000",
+          "w": 3,
+          "x": 9,
+          "y": 12,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "max": 100,
+            "min": 0,
+            "units": "%",
+            "customName": "Return Humidity",
+            "selectedKey": "Air_Return_Humidity",
+            "deviceUniqId": "smartrack-cooling-1",
+            "selectedIcon": "Droplets"
+          },
+          "static": false,
+          "widgetType": "Analog Meter"
+        },
+        {
+          "h": 13,
+          "i": "Chart-TempDelta-1770088600000",
+          "w": 6,
+          "x": 0,
+          "y": 18,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "timeRange": "24h",
+            "showLegend": true,
+            "configNames": [
+              "Cooling Return Air Temperature",
+              "Cooling Supply Air Temperature 1"
+            ],
+            "smoothLines": true,
+            "widgetTitle": "Temperature Delta (Efficiency)",
+            "showCorrelations": true
+          },
+          "static": false,
+          "widgetType": "Multi-Line Chart"
+        },
+        {
+          "h": 13,
+          "i": "Chart-PressureHealth-1770088700000",
+          "w": 6,
+          "x": 6,
+          "y": 18,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "timeRange": "24h",
+            "showLegend": true,
+            "configNames": [
+              "Cooling Suction Pressure",
+              "Cooling Exhaust Pressure"
+            ],
+            "smoothLines": true,
+            "widgetTitle": "Compressor Health (Pressure)",
+            "showCorrelations": false
+          },
+          "static": false,
+          "widgetType": "Multi-Line Chart"
+        },
+        {
+          "h": 12,
+          "i": "Cooling-Dashboard-widget-1770109636953",
+          "w": 12,
+          "x": 0,
+          "y": 0,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "customName": "Cooling",
+            "keyMapping": {
+              "mode": "Operation_Mode",
+              "acStatus": "ON_OFF_UNIT",
+              "returnHum": "Air_Return_Humidity",
+              "supplyHum": "",
+              "returnTemp": "Air_Return_Temperature",
+              "supplyTemp": "Air_Outlet_Temperature"
+            },
+            "deviceUniqId": "smartrack-cooling-1"
+          },
+          "static": false,
+          "widgetType": "Cooling Dashboard"
+        }
+      ],
+      "inUse": false,
+      "isActive": true
+    },
+    {
+      "name": "Smartrack UPS",
+      "layout": [
+        {
+          "h": 17,
+          "i": "Ups-Dashboard-widget-1769746000000",
+          "w": 12,
+          "x": 0,
+          "y": 0,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "line": {
+              "keyMapping": {
+                "voltage": "input_voltage",
+                "frequency": "input_frequency"
+              },
+              "deviceUniqId": "smartrack-ups-1"
+            },
+            "load": {
+              "keyMapping": {
+                "percent": "output_load",
+                "activePower": "output_active_power",
+                "apparentPower": "output_apparent_power"
+              },
+              "deviceUniqId": "smartrack-ups-1"
+            },
+            "bypass": {
+              "keyMapping": {
+                "voltage": "input_bypass_voltage",
+                "frequency": "input_bypass_frequency"
+              },
+              "deviceUniqId": "smartrack-ups-1"
+            },
+            "output": {
+              "keyMapping": {
+                "current": "output_current",
+                "voltage": "output_voltage",
+                "frequency": "output_frequency"
+              },
+              "deviceUniqId": "smartrack-ups-1"
+            },
+            "status": {
+              "keyMapping": {
+                "status": "output_status",
+                "runningTime": "state_total_time_on_normal",
+                "communicationStatus": "state_alarm_status"
+              },
+              "deviceUniqId": "smartrack-ups-1"
+            },
+            "battery": {
+              "keyMapping": {
+                "time": "battery_runtime_remaining",
+                "health": "battery_health",
+                "current": "battery_current",
+                "percent": "battery_capacity",
+                "voltage": "battery_actual_voltage",
+                "temperature": "battery_temperature"
+              },
+              "deviceUniqId": "smartrack-ups-1"
+            },
+            "customName": "Smartrack UPS Status"
+          },
+          "static": false,
+          "widgetType": "Ups Dashboard"
+        },
+        {
+          "h": 5,
+          "i": "Status-Card-Battery-1769746100000",
+          "w": 2,
+          "x": 0,
+          "y": 17,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "%",
+            "iconColor": "#FFFFFF",
+            "customName": "Battery Level",
+            "iconBgColor": "#22c55e",
+            "selectedKey": "battery_capacity",
+            "deviceUniqId": "smartrack-ups-1",
+            "selectedIcon": "BatteryCharging"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 5,
+          "i": "Status-Card-Load-1769746200000",
+          "w": 2,
+          "x": 2,
+          "y": 17,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "%",
+            "iconColor": "#FFFFFF",
+            "customName": "Load Level",
+            "iconBgColor": "#eab308",
+            "selectedKey": "output_load",
+            "deviceUniqId": "smartrack-ups-1",
+            "selectedIcon": "Zap"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 5,
+          "i": "Status-Card-InputV-1769746300000",
+          "w": 2,
+          "x": 4,
+          "y": 17,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "V",
+            "iconColor": "#FFFFFF",
+            "customName": "Input Voltage",
+            "iconBgColor": "#3b82f6",
+            "selectedKey": "input_voltage",
+            "deviceUniqId": "smartrack-ups-1",
+            "selectedIcon": "Plug"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 5,
+          "i": "Status-Card-OutputV-1769746400000",
+          "w": 2,
+          "x": 6,
+          "y": 17,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "V",
+            "iconColor": "#FFFFFF",
+            "customName": "Output Voltage",
+            "iconBgColor": "#8b5cf6",
+            "selectedKey": "output_voltage",
+            "deviceUniqId": "smartrack-ups-1",
+            "selectedIcon": "Zap"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 5,
+          "i": "Status-Card-Runtime-1769746500000",
+          "w": 2,
+          "x": 8,
+          "y": 17,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "sec",
+            "iconColor": "#FFFFFF",
+            "customName": "Runtime",
+            "iconBgColor": "#64748b",
+            "selectedKey": "battery_runtime_remaining",
+            "deviceUniqId": "smartrack-ups-1",
+            "selectedIcon": "Clock"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 5,
+          "i": "Status-Card-Status-1769746600000",
+          "w": 2,
+          "x": 10,
+          "y": 17,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "",
+            "iconColor": "#FFFFFF",
+            "customName": "UPS Status",
+            "iconBgColor": "#0ea5e9",
+            "selectedKey": "output_status",
+            "deviceUniqId": "smartrack-ups-1",
+            "selectedIcon": "Activity"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        }
+      ],
+      "inUse": false,
+      "isActive": true
+    },
+    {
+      "name": "Smartrack Power",
+      "layout": [
+        {
+          "h": 20,
+          "i": "PDM-Topology-widget-1769745000000",
+          "w": 12,
+          "x": 0,
+          "y": 0,
+          "minH": 4,
+          "minW": 4,
+          "moved": false,
+          "config": {
+            "devices": {
+              "ac": [
+                {
+                  "id": "ac-1",
+                  "label": "Smartrack Cooling",
+                  "enabled": true,
+                  "deviceUniqId": "smartrack-cooling-1"
+                }
+              ],
+              "pdm": {
+                "label": "Main Rack PDU",
+                "enabled": true,
+                "deviceUniqId": "smartrack-rpdu-1"
+              },
+              "pdu": [
+                {
+                  "id": "pdu-1",
+                  "label": "Smartrack PDU",
+                  "enabled": true,
+                  "deviceUniqId": "smartrack-rpdu-1"
+                }
+              ],
+              "ups": [
+                {
+                  "id": "ups-1",
+                  "label": "Smartrack UPS",
+                  "enabled": true,
+                  "deviceUniqId": "smartrack-ups-1"
+                }
+              ]
+            },
+            "location": "Smartrack Rack",
+            "appearance": {
+              "size": "large",
+              "theme": "dark",
+              "showLines": true,
+              "showLabels": true,
+              "showStatus": true
+            },
+            "thresholds": {
+              "battery": {
+                "min": 20
+              },
+              "voltage": {
+                "max": 240,
+                "min": 210
+              },
+              "temperature": {
+                "max": 40
+              }
+            },
+            "widgetName": "Smartrack Power Distribution",
+            "refreshRate": 3
+          },
+          "static": false,
+          "widgetType": "PDM Topology"
+        }
+      ],
+      "inUse": false,
+      "isActive": true
+    },
+    {
+      "name": "Smartrack Security",
+      "layout": [
+        {
+          "h": 5,
+          "i": "Active-Alarms-widget-1769592730711",
+          "w": 4,
+          "x": 0,
+          "y": 0,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "widgetTitle": "Active Alarms"
+          },
+          "static": false,
+          "widgetType": "Active Alarms"
+        },
+        {
+          "h": 13,
+          "i": "Alarm-History-widget-1769592737305",
+          "w": 4,
+          "x": 0,
+          "y": 5,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "logLimit": 10,
+            "widgetTitle": "Alarm Log"
+          },
+          "static": false,
+          "widgetType": "Alarm History"
+        }
+      ],
+      "inUse": false,
+      "isActive": true
+    },
+    {
+      "name": "Smartrack Dashboard",
+      "layout": [
+        {
+          "h": 20,
+          "i": "Server-Rack-3D-widget-1766736884252",
+          "w": 6,
+          "x": 2,
+          "y": 0,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "rackId": "smartrack-rack-1",
+            "rackType": "server"
+          },
+          "static": false,
+          "widgetType": "Server Rack 3D"
+        },
+        {
+          "h": 5,
+          "i": "Status-Indicator-Card-widget-1766737097246",
+          "w": 2,
+          "x": 10,
+          "y": 20,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "°C",
+            "multiply": 1,
+            "iconColor": "#FFFFFF",
+            "customName": "Temp Hum 1",
+            "iconBgColor": "#3B82F6",
+            "selectedKey": "temp",
+            "deviceUniqId": "smartrack-temphum-1",
+            "selectedIcon": "Thermometer"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 5,
+          "i": "Status-Indicator-Card-widget-1766737123966",
+          "w": 2,
+          "x": 10,
+          "y": 15,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "%",
+            "multiply": 1,
+            "iconColor": "#FFFFFF",
+            "customName": "Humidity 1",
+            "iconBgColor": "#3B82F6",
+            "selectedKey": "hum",
+            "deviceUniqId": "smartrack-temphum-1",
+            "selectedIcon": "Droplets"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 5,
+          "i": "Status-Indicator-Card-widget-1766737210640",
+          "w": 2,
+          "x": 8,
+          "y": 0,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "",
+            "multiply": 1,
+            "iconColor": "#FFFFFF",
+            "customName": "Vibration",
+            "iconBgColor": "#3B82F6",
+            "selectedKey": "activity",
+            "deviceUniqId": "smartrack-sensorvib-1",
+            "selectedIcon": "AlertTriangle"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 3,
+          "i": "Dashboard-Shortcut-widget-1766737331999",
+          "w": 2,
+          "x": 0,
+          "y": 7,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "icon": "LayoutDashboard",
+            "targetType": "dashboard",
+            "shortcutTitle": "Analytic",
+            "targetDashboardId": "cmm1idx85000tgvu63ea4j95n"
+          },
+          "static": false,
+          "widgetType": "Dashboard Shortcut"
+        },
+        {
+          "h": 3,
+          "i": "Dashboard-Shortcut-widget-1766737343625",
+          "w": 2,
+          "x": 0,
+          "y": 4,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "icon": "Shield",
+            "targetType": "dashboard",
+            "shortcutTitle": "Security",
+            "targetDashboardId": "cmm1idx8n0011gvu6x674qydt"
+          },
+          "static": false,
+          "widgetType": "Dashboard Shortcut"
+        },
+        {
+          "h": 5,
+          "i": "Status-Indicator-Card-widget-1769612046664",
+          "w": 2,
+          "x": 8,
+          "y": 5,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "units": "%",
+            "multiply": 1,
+            "iconColor": "#FFFFFF",
+            "customName": "Humidity 2",
+            "iconBgColor": "#3B82F6",
+            "selectedKey": "hum",
+            "deviceUniqId": "smartrack-temphum-2",
+            "selectedIcon": "Droplets"
+          },
+          "static": false,
+          "widgetType": "Status Indicator Card"
+        },
+        {
+          "h": 4,
+          "i": "Image-Display-widget-1769743608173",
+          "w": 2,
+          "x": 0,
+          "y": 0,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "fitMode": "contain",
+            "imageUrl": "https://i.ibb.co.com/p6mjx55s/Untitled-removebg-preview.png",
+            "customName": "ersd",
+            "borderColor": "#000000",
+            "borderWidth": 0,
+            "borderRadius": "lg",
+            "backgroundColor": "transparent"
+          },
+          "static": false,
+          "widgetType": "Image Display"
+        },
+        {
+          "h": 3,
+          "i": "Dashboard-Shortcut-widget-1770084452883",
+          "w": 2,
+          "x": 0,
+          "y": 10,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "icon": "Zap",
+            "targetType": "dashboard",
+            "shortcutTitle": "Power",
+            "targetDashboardId": "cmm1idx8j000zgvu60giueeg4"
+          },
+          "static": false,
+          "widgetType": "Dashboard Shortcut"
+        },
+        {
+          "h": 3,
+          "i": "Dashboard-Shortcut-widget-1770084475410",
+          "w": 2,
+          "x": 0,
+          "y": 13,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "icon": "Cog",
+            "targetType": "dashboard",
+            "shortcutTitle": "UPS",
+            "targetDashboardId": "cmm1idx8r0013gvu6r72xjs8h"
+          },
+          "static": false,
+          "widgetType": "Dashboard Shortcut"
+        },
+        {
+          "h": 4,
+          "i": "Dashboard-Shortcut-widget-1770107834386",
+          "w": 2,
+          "x": 0,
+          "y": 16,
+          "minH": 2,
+          "minW": 2,
+          "moved": false,
+          "config": {
+            "icon": "LayoutDashboard",
+            "targetType": "dashboard",
+            "shortcutTitle": "Cooling",
+            "targetDashboardId": "cmm1idx89000vgvu6ecn7fsby"
+          },
+          "static": false,
+          "widgetType": "Dashboard Shortcut"
+        }
+      ],
+      "inUse": false,
+      "isActive": true
+    },
+    {
+      "name": "Admin Panel",
+      "layout": "[{\"h\":12,\"i\":\"Server-Rack-3D-1775019161354-1\",\"w\":12,\"x\":0,\"y\":0,\"config\":{\"rackId\":\"smartrack-rack-1\",\"rackIds\":[\"smartrack-rack-1\",\"smartrack-rack-2\",\"smartrack-rack-3\",\"smartrack-rack-4\"],\"rackType\":\"server\",\"rackSpacing\":62,\"assignedCategory\":\"Overview\"},\"widgetType\":\"Server Rack 3D\"},{\"h\":8,\"i\":\"Energy-Target-Chart-1775019161354-a1\",\"w\":6,\"x\":0,\"y\":0,\"config\":{\"assignedCategory\":\"Analytic\",\"widgetTitle\":\"Energy Target Chart\",\"loggingConfigId\":\"smartrack_chart_rpdu_output_current_1\",\"configNames\":[\"RPDU Output Current 1\"],\"chartType\":\"heatmap\",\"targetUnit\":\"A\",\"showProjections\":true,\"showAchievements\":true,\"year\":2026,\"heatmapMonth\":4,\"heatmapYear\":2026,\"colorScheme\":\"github-green\",\"activityLevelMode\":\"auto\"},\"widgetType\":\"Energy Target Chart\"},{\"h\":5,\"i\":\"Carbon-Emissions-1775019161354-a4\",\"w\":3,\"x\":0,\"y\":8,\"config\":{\"widgetTitle\":\"Total Carbon Emissions\",\"billConfigId\":\"smartrack_bill_rpdu_feed_1\",\"assignedCategory\":\"Analytic\",\"publishTopic\":\"\"},\"widgetType\":\"Carbon Emissions\"},{\"h\":11,\"i\":\"PDM-Topology-1775019161354-p1\",\"w\":12,\"x\":0,\"y\":0,\"config\":{\"devices\":{\"pdm\":{\"enabled\":true,\"deviceUniqId\":\"smartrack-ups-1\",\"label\":\"Main PDM\"},\"ups\":[{\"id\":\"dummy_ups_1\",\"label\":\"UPS A\",\"enabled\":true,\"deviceUniqId\":\"smartrack-ups-1\"}],\"pdu\":[{\"id\":\"dummy_pdu_1\",\"label\":\"Rack PDU 1\",\"enabled\":true,\"deviceUniqId\":\"smartrack-rpdu-1\"}],\"ac\":[{\"id\":\"dummy_ac_1\",\"label\":\"PAC 1\",\"enabled\":true,\"deviceUniqId\":\"smartrack-cooling-1\"}]},\"location\":\"Data Center 1\",\"appearance\":{\"size\":\"medium\",\"theme\":\"dark\",\"showLabels\":true,\"showLines\":true,\"showStatus\":true},\"thresholds\":{\"voltage\":{\"min\":190,\"max\":240},\"temperature\":{\"max\":45},\"battery\":{\"min\":20}},\"widgetName\":\"Floor Power Topology\",\"refreshRate\":5,\"assignedCategory\":\"Power\"},\"widgetType\":\"PDM Topology\"},{\"h\":11,\"i\":\"Ups-Dashboard-1775019161354-u1\",\"w\":12,\"x\":0,\"y\":0,\"config\":{\"line\":{\"keyMapping\":{\"voltage\":\"input_voltage\",\"frequency\":\"input_frequency\"},\"deviceUniqId\":\"smartrack-ups-1\"},\"load\":{\"keyMapping\":{\"percent\":\"output_load\",\"activePower\":\"output_active_power\",\"apparentPower\":\"output_apparent_power\"},\"deviceUniqId\":\"smartrack-ups-1\"},\"bypass\":{\"keyMapping\":{\"voltage\":\"input_bypass_voltage\",\"frequency\":\"input_bypass_frequency\"},\"deviceUniqId\":\"smartrack-ups-1\"},\"output\":{\"keyMapping\":{\"current\":\"output_current\",\"voltage\":\"output_voltage\",\"frequency\":\"output_frequency\"},\"deviceUniqId\":\"smartrack-ups-1\"},\"status\":{\"keyMapping\":{\"status\":\"output_status\",\"runningTime\":\"state_total_time_on_normal\",\"communicationStatus\":\"state_alarm_status\"},\"deviceUniqId\":\"smartrack-ups-1\"},\"battery\":{\"keyMapping\":{\"time\":\"battery_runtime_remaining\",\"health\":\"battery_health\",\"current\":\"battery_current\",\"percent\":\"battery_capacity\",\"voltage\":\"battery_actual_voltage\",\"temperature\":\"battery_temperature\"},\"deviceUniqId\":\"smartrack-ups-1\"},\"customName\":\"Main UPS Dashboard\",\"assignedCategory\":\"UPS\"},\"widgetType\":\"Ups Dashboard\"},{\"h\":10,\"i\":\"Active-Alarms-1775019161354-s1\",\"w\":4,\"x\":0,\"y\":0,\"config\":{\"assignedCategory\":\"Security\",\"widgetTitle\":\"Active Alarm\"},\"widgetType\":\"Active Alarms\"},{\"h\":10,\"i\":\"Alarm-History-1775019161354-s2\",\"w\":8,\"x\":4,\"y\":0,\"config\":{\"assignedCategory\":\"Security\",\"widgetTitle\":\"Alarm History\",\"logLimit\":10},\"widgetType\":\"Alarm History\"},{\"h\":11,\"i\":\"Cooling-Dashboard-1775019161354-c1\",\"w\":12,\"x\":0,\"y\":0,\"config\":{\"customName\":\"Cooling Dashboard\",\"keyMapping\":{\"mode\":\"Operation_Mode\",\"acStatus\":\"ON_OFF_UNIT\",\"returnHum\":\"Air_Return_Humidity\",\"supplyHum\":\"\",\"returnTemp\":\"Air_Return_Temperature\",\"supplyTemp\":\"Air_Outlet_Temperature\"},\"deviceUniqId\":\"smartrack-cooling-1\",\"assignedCategory\":\"Cooling\"},\"widgetType\":\"Cooling Dashboard\"},{\"h\":8,\"i\":\"Chart-PueTrend-1775019161355-a9\",\"w\":6,\"x\":6,\"y\":0,\"config\":{\"timeRange\":\"24h\",\"showLegend\":true,\"configNames\":[\"Smartrack PUE Value\",\"Smartrack IT Load %\"],\"smoothLines\":true,\"widgetTitle\":\"PUE Trend (24h) & IT Load Trend\",\"showCorrelations\":false,\"assignedCategory\":\"Analytic\"},\"widgetType\":\"Multi-Line Chart\"},{\"h\":5,\"i\":\"Billing-AnalyticPred-1775019161355-a12\",\"w\":3,\"x\":3,\"y\":8,\"config\":{\"widgetTitle\":\"Predictive Bill L1\",\"billConfigId\":\"smartrack_bill_rpdu_feed_1\",\"assignedCategory\":\"Analytic\",\"showType\":\"all\"},\"widgetType\":\"Predictive Billing\"},{\"h\":5,\"i\":\"GroupedStatus-TH1-env-e1\",\"w\":4,\"x\":0,\"y\":0,\"config\":{\"title\":\"Temp Hum 1\",\"assignedCategory\":\"Environment\",\"items\":[{\"customName\":\"Temperature 1\",\"deviceUniqId\":\"smartrack-temphum-1\",\"selectedKey\":\"temp\",\"units\":\"°C\",\"multiply\":1,\"selectedIcon\":\"Thermometer\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#ef4444\"},{\"customName\":\"Humidity 1\",\"deviceUniqId\":\"smartrack-temphum-1\",\"selectedKey\":\"hum\",\"units\":\"%\",\"multiply\":1,\"selectedIcon\":\"Droplets\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#3b82f6\"}]},\"widgetType\":\"Status Dashboard\"},{\"h\":5,\"i\":\"GroupedStatus-TH2-env-e2\",\"w\":4,\"x\":4,\"y\":0,\"config\":{\"title\":\"Temp Hum 2\",\"assignedCategory\":\"Environment\",\"items\":[{\"customName\":\"Temperature 2\",\"deviceUniqId\":\"smartrack-temphum-2\",\"selectedKey\":\"temp\",\"units\":\"°C\",\"multiply\":1,\"selectedIcon\":\"Thermometer\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#f97316\"},{\"customName\":\"Humidity 2\",\"deviceUniqId\":\"smartrack-temphum-2\",\"selectedKey\":\"hum\",\"units\":\"%\",\"multiply\":1,\"selectedIcon\":\"Droplets\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#06b6d4\"}]},\"widgetType\":\"Status Dashboard\"},{\"h\":5,\"i\":\"GroupedStatus-Vibration-env-e3\",\"w\":4,\"x\":8,\"y\":0,\"config\":{\"title\":\"Vibration Sensor\",\"assignedCategory\":\"Environment\",\"items\":[{\"customName\":\"Activity\",\"deviceUniqId\":\"smartrack-sensorvib-1\",\"selectedKey\":\"activity\",\"units\":\"\",\"multiply\":1,\"selectedIcon\":\"Zap\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#f59e0b\"}]},\"widgetType\":\"Status Dashboard\"},{\"i\":\"MQTT-Status-Card-1775643782089\",\"x\":0,\"y\":5,\"w\":6,\"h\":6,\"widgetType\":\"MQTT Status Card\",\"config\":{\"widgetTitle\":\"MQTT Status Card\",\"assignedCategory\":\"Environment\",\"deviceTopic\":\"DRYCONTACT/1\",\"items\":[{\"customName\":\"Pintu Depan\",\"selectedKey\":\"drycontactInput1\",\"useCondition\":true,\"onValue\":\"true\",\"offValue\":\"false\",\"onLabel\":\"Open\",\"offLabel\":\"Closed\",\"selectedIcon\":\"Home\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#ff7800\",\"multiply\":1,\"units\":\"\"},{\"customName\":\"Pintu Belakang\",\"selectedKey\":\"drycontactInput2\",\"useCondition\":true,\"onValue\":\"true\",\"offValue\":\"false\",\"onLabel\":\"Open \",\"offLabel\":\"Closed\",\"selectedIcon\":\"Home\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#3B82F6\",\"multiply\":1,\"units\":\"\"},{\"customName\":\"Water Leak 1\",\"selectedKey\":\"drycontactInput3\",\"useCondition\":true,\"onValue\":\"true\",\"offValue\":\"false\",\"onLabel\":\"Warning\",\"offLabel\":\"Ok\",\"selectedIcon\":\"Droplets\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#3B82F6\",\"multiply\":1,\"units\":\"\"},{\"customName\":\"Water Leak 2\",\"selectedKey\":\"drycontactInput4\",\"useCondition\":true,\"onValue\":\"true\",\"offValue\":\"false\",\"onLabel\":\"Warning\",\"offLabel\":\"Ok\",\"selectedIcon\":\"Droplets\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#3B82F6\",\"multiply\":1,\"units\":\"\"},{\"customName\":\"FSS\",\"selectedKey\":\"drycontactInput5\",\"useCondition\":true,\"onValue\":\"true\",\"offValue\":\"false\",\"onLabel\":\"Warning\",\"offLabel\":\"Ok\",\"selectedIcon\":\"Zap\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#ff7800\",\"multiply\":1,\"units\":\"\"}]}},{\"i\":\"MQTT-Status-Card-1775643933042\",\"x\":6,\"y\":5,\"w\":6,\"h\":6,\"widgetType\":\"MQTT Status Card\",\"config\":{\"widgetTitle\":\"MQTT Status Card\",\"assignedCategory\":\"Environment\",\"deviceTopic\":\"RELAYMINI/1\",\"items\":[{\"customName\":\"Lighting\",\"selectedKey\":\"relayMiniOutput1\",\"useCondition\":true,\"onValue\":\"true\",\"offValue\":\"false\",\"onLabel\":\"ON\",\"offLabel\":\"OFF\",\"selectedIcon\":\"Lightbulb\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#e01b24\",\"multiply\":1,\"units\":\"\"},{\"customName\":\"Buzzer\",\"selectedKey\":\"relayMiniOutput2\",\"useCondition\":true,\"onValue\":\"true\",\"offValue\":\"false\",\"onLabel\":\"ON\",\"offLabel\":\"OFF\",\"selectedIcon\":\"Info\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#ff7800\",\"multiply\":1,\"units\":\"\"},{\"customName\":\"Cooling Fan\",\"selectedKey\":\"relayMiniOutput3\",\"useCondition\":true,\"onValue\":\"true\",\"offValue\":\"false\",\"onLabel\":\"ON\",\"offLabel\":\"OFF\",\"selectedIcon\":\"Wind\",\"iconColor\":\"#FFFFFF\",\"iconBgColor\":\"#3B82F6\",\"multiply\":1,\"units\":\"\"}]}},{\"i\":\"AI-Energy-Advisor-1775658801911\",\"x\":6,\"y\":8,\"w\":6,\"h\":5,\"widgetType\":\"AI Energy Advisor\",\"config\":{\"widgetTitle\":\"AI Energy Advisor\",\"assignedCategory\":\"Analytic\",\"deviceSources\":[{\"uniqId\":\"smartrack-poweranalyzer-1\",\"name\":\"Smartrack Power Analyzers\"},{\"uniqId\":\"smartrack-pue-1\",\"name\":\"Smartrack PUE\"},{\"uniqId\":\"smartrack-bill-rpdu-1\",\"name\":\"Smartrack Rack PDU Bill\"}],\"logSources\":[{\"id\":\"smartrack_bill_energy_kwh\",\"customName\":\"Smartrack Bill Energy kWh\"},{\"id\":\"smartrack_poweranalyzer_load_log\",\"customName\":\"Smartrack IT Load %\"},{\"id\":\"smartrack_pue_value_log\",\"customName\":\"Smartrack PUE Value\"}]}}]",
+      "inUse": true,
+      "isActive": true
+    }
+  ],
+  "totalDashboards": 8,
+  "generatedAt": "2026-04-08T15:15:47.571Z"
+}

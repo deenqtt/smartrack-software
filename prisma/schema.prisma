@@ -1,0 +1,722 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
+  engineType    = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                          String                       @id @default(cuid())
+  email                       String                       @unique
+  password                    String
+  roleId                      String
+  fingerprintId               String?                      @unique
+  cardUid                     String?                      @unique
+  avatar                      String?
+  createdAt                   DateTime                     @default(now())
+  updatedAt                   DateTime                     @updatedAt
+  phoneNumber                 String?
+  alarmNotificationRecipients AlarmNotificationRecipient[]
+  ownedBillConfigs            BillConfiguration[]          @relation("BillConfigOwner")
+  dashboards                  DashboardLayout[]
+  assignedMaintenances        Maintenance[]                @relation("AssignedToUser")
+  notifications               Notification[]
+  ruleChains                  RuleChain[]
+  role_data                   Role                         @relation(fields: [roleId], references: [id])
+  sessions                    UserSession[]
+  sharedBillConfigs           BillConfiguration[]          @relation("BillConfigShared")
+  ownedDevices                DeviceExternal[]             @relation("DeviceOwner")
+
+  @@index([email, roleId])
+  @@index([createdAt])
+}
+
+model RuleChain {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  nodes       Json
+  edges       Json
+  isActive    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, name])
+  @@map("RuleChain")
+}
+
+model Role {
+  id              String               @id @default(cuid())
+  name            String               @unique
+  description     String?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  menuPermissions RoleMenuPermission[]
+  rolePermissions RolePermission[]     @relation("RolePermissions")
+  users           User[]
+  permissions     Permission[]         @relation("RolePermissions")
+
+  @@map("Role")
+}
+
+model Permission {
+  id              String           @id @default(cuid())
+  name            String           @unique
+  description     String?
+  resource        String
+  action          String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  rolePermissions RolePermission[] @relation("RolePermissions")
+  roles           Role[]           @relation("RolePermissions")
+
+  @@unique([resource, action])
+  @@index([resource, action])
+  @@map("Permission")
+}
+
+model MenuGroup {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  label       String
+  icon        String?
+  order       Int
+  isActive    Boolean    @default(true)
+  isDeveloper Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  items       MenuItem[]
+
+  @@map("MenuGroup")
+}
+
+model MenuItem {
+  id          String               @id @default(cuid())
+  menuGroupId String
+  name        String               @unique
+  label       String
+  path        String
+  icon        String?
+  order       Int
+  isActive    Boolean              @default(true)
+  isDeveloper Boolean              @default(false)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  menuGroup   MenuGroup            @relation(fields: [menuGroupId], references: [id])
+  permissions RoleMenuPermission[]
+
+  @@map("MenuItem")
+}
+
+model RoleMenuPermission {
+  id         String   @id @default(cuid())
+  roleId     String
+  menuItemId String
+  canView    Boolean  @default(true)
+  canCreate  Boolean  @default(false)
+  canUpdate  Boolean  @default(false)
+  canDelete  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  role       Role     @relation(fields: [roleId], references: [id])
+
+  @@unique([roleId, menuItemId])
+  @@map("RoleMenuPermission")
+}
+
+model RolePermission {
+  id           String     @id @default(cuid())
+  roleId       String
+  permissionId String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  permission   Permission @relation("RolePermissions", fields: [permissionId], references: [id])
+  role         Role       @relation("RolePermissions", fields: [roleId], references: [id])
+
+  @@unique([roleId, permissionId])
+  @@index([roleId, permissionId])
+  @@index([roleId])
+  @@map("RolePermission")
+}
+
+model Maintenance {
+  id             Int               @id @default(autoincrement())
+  name           String
+  description    String?
+  startTask      DateTime
+  endTask        DateTime
+  assignTo       String
+  targetType     MaintenanceTarget
+  targetId       String
+  status         String            @default("Scheduled")
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  isActive       Boolean           @default(true)
+  deviceTargetId String?
+  assignedTo     User              @relation("AssignedToUser", fields: [assignTo], references: [id], onDelete: Cascade)
+  deviceTarget   DeviceExternal?   @relation(fields: [deviceTargetId], references: [id])
+}
+
+model DeviceExternal {
+  id                          String                      @id @default(cuid())
+  uniqId                      String                      @unique @default(cuid())
+  name                        String
+  topic                       String                      @unique
+  address                     String?
+  rackId                      String?
+  positionU                   Int?                        @default(0)
+  sizeU                       Int?                        @default(1)
+  deviceType                  String?                     @default("SERVER")
+  status                      String?                     @default("PLANNED")
+  createdAt                   DateTime                    @default(now())
+  updatedAt                   DateTime                    @updatedAt
+  lastPayload                 Json?
+  lastUpdatedByMqtt           DateTime?
+  alarmConfigs                AlarmConfiguration[]
+  publishTargetForBillConfig  BillConfiguration?          @relation("PublishTargetForBill")
+  sourceForBillConfigs        BillConfiguration[]         @relation("SourceDeviceForBill")
+  rack                        Rack?                       @relation(fields: [rackId], references: [id])
+  loggingConfigs              LoggingConfiguration[]
+  maintenanceTasks            Maintenance[]
+  powerAnalyzerApiTopicConfig PowerAnalyzerConfiguration? @relation("PowerAnalyzerApiTopic")
+  pueApiTopicConfig           PueConfiguration?           @relation("PueApiTopic")
+  users                       User[]                      @relation("DeviceOwner")
+}
+
+model LoggingConfiguration {
+  id                     String         @id @default(cuid())
+  customName             String
+  key                    String
+  units                  String?
+  multiply               Float?         @default(1)
+  deviceUniqId           String
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  lastLoggedAt           DateTime?
+  loggingIntervalMinutes Int            @default(10)
+  logs                   LoggedData[]
+  device                 DeviceExternal @relation(fields: [deviceUniqId], references: [uniqId])
+
+  @@unique([deviceUniqId, key])
+}
+
+model LoggedData {
+  id        String               @id @default(cuid())
+  configId  String
+  value     Float
+  timestamp DateTime             @default(now())
+  config    LoggingConfiguration @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@index([configId, timestamp])
+  @@index([timestamp])
+}
+
+model BillConfiguration {
+  id                        String         @id @default(cuid())
+  customName                String         @unique
+  sourceDeviceKey           String
+  rupiahRatePerKwh          Float          @default(1467)
+  dollarRatePerKwh          Float          @default(0.1)
+  carbonRateKgPerKwh        Float          @default(0.87)
+  createdAt                 DateTime       @default(now())
+  updatedAt                 DateTime       @updatedAt
+  publishTargetDeviceUniqId String         @unique
+  sourceDeviceUniqId        String
+  userId                    String
+  publishTargetDevice       DeviceExternal @relation("PublishTargetForBill", fields: [publishTargetDeviceUniqId], references: [uniqId])
+  sourceDevice              DeviceExternal @relation("SourceDeviceForBill", fields: [sourceDeviceUniqId], references: [uniqId])
+  user                      User           @relation("BillConfigOwner", fields: [userId], references: [id])
+  logs                      BillLog[]
+  sharedUsers               User[]         @relation("BillConfigShared")
+}
+
+model BillLog {
+  id             String            @id @default(cuid())
+  configId       String
+  rawValue       Float
+  rupiahCost     Float
+  dollarCost     Float
+  carbonEmission Float             @default(0)
+  timestamp      DateTime          @default(now())
+  config         BillConfiguration @relation(fields: [configId], references: [id], onDelete: Cascade)
+}
+
+model PueConfiguration {
+  id             String          @id @default(cuid())
+  customName     String          @unique
+  type           String          @default("pue")
+  apiTopicUniqId String?         @unique
+  pduList        Json?
+  mainPower      Json?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  apiTopic       DeviceExternal? @relation("PueApiTopic", fields: [apiTopicUniqId], references: [uniqId])
+}
+
+model PowerAnalyzerConfiguration {
+  id             String          @id @default(cuid())
+  customName     String          @unique
+  apiTopicUniqId String?         @unique
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  mainPower      Json?
+  pduList        Json?
+  apiTopic       DeviceExternal? @relation("PowerAnalyzerApiTopic", fields: [apiTopicUniqId], references: [uniqId])
+}
+
+model MenuConfiguration {
+  id        String   @id @default(cuid())
+  structure Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AlarmConfiguration {
+  id                     String                       @id @default(cuid())
+  customName             String
+  alarmType              AlarmType
+  keyType                AlarmKeyType
+  key                    String
+  deviceUniqId           String
+  minValue               Float?
+  maxValue               Float?
+  maxOnly                Boolean?                     @default(false)
+  directTriggerOnTrue    Boolean?                     @default(true)
+  createdAt              DateTime                     @default(now())
+  updatedAt              DateTime                     @updatedAt
+  bits                   AlarmBitConfiguration[]
+  device                 DeviceExternal               @relation(fields: [deviceUniqId], references: [uniqId], onDelete: Cascade)
+  logs                   AlarmLog[]
+  notificationRecipients AlarmNotificationRecipient[]
+}
+
+model AlarmBitConfiguration {
+  id              String             @id @default(cuid())
+  alarmConfigId   String
+  bitPosition     Int
+  customName      String
+  alertToWhatsApp Boolean            @default(false)
+  alarmConfig     AlarmConfiguration @relation(fields: [alarmConfigId], references: [id], onDelete: Cascade)
+}
+
+model AlarmNotificationRecipient {
+  id            String             @id @default(cuid())
+  alarmConfigId String
+  userId        String
+  sendWhatsApp  Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  alarmConfig   AlarmConfiguration @relation(fields: [alarmConfigId], references: [id], onDelete: Cascade)
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([alarmConfigId, userId])
+  @@map("AlarmNotificationRecipient")
+}
+
+model AlarmLog {
+  id              String             @id @default(cuid())
+  status          AlarmLogStatus
+  triggeringValue String?
+  timestamp       DateTime           @default(now())
+  clearedAt       DateTime?
+  alarmConfigId   String
+  alarmConfig     AlarmConfiguration @relation(fields: [alarmConfigId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DashboardLayout {
+  id                 String                    @id @default(cuid())
+  name               String
+  layout             Json
+  userId             String
+  createdAt          DateTime                  @default(now())
+  updatedAt          DateTime                  @updatedAt
+  inUse              Boolean                   @default(false)
+  isActive           Boolean?                  @default(true)
+  container3dWidgets Container3dWidgetConfig[]
+  user               User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, name])
+}
+
+model Container3dWidgetConfig {
+  id             String          @id @default(cuid())
+  layoutId       String
+  customName     String
+  totalRack      Int             @default(11)
+  coolingRacks   Json?
+  rackMappings   Json?
+  containerType  String?         @default("industrial")
+  frontTopics    Json?
+  backTopics     Json?
+  powerTopic     String?
+  gridX          Int             @default(0)
+  gridY          Int             @default(0)
+  gridWidth      Int             @default(4)
+  gridHeight     Int             @default(4)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  layout         DashboardLayout @relation(fields: [layoutId], references: [id], onDelete: Cascade)
+  containerRacks ContainerRack[]
+
+  @@index([layoutId])
+  @@map("Container3dWidgetConfig")
+}
+
+model ContainerRack {
+  id                        String                  @id @default(cuid())
+  container3dWidgetConfigId String
+  rackNumber                Int
+  servers                   Json?
+  createdAt                 DateTime                @default(now())
+  updatedAt                 DateTime                @updatedAt
+  container3dWidgetConfig   Container3dWidgetConfig @relation(fields: [container3dWidgetConfigId], references: [id], onDelete: Cascade)
+
+  @@unique([container3dWidgetConfigId, rackNumber])
+  @@index([container3dWidgetConfigId])
+  @@map("ContainerRack")
+}
+
+model EnergyTarget {
+  id              String   @id @default(cuid())
+  loggingConfigId String   @unique
+  year            Int
+  monthlyTargets  Json
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([loggingConfigId, year])
+}
+
+model Rack {
+  id                   String           @id @default(cuid())
+  name                 String           @unique
+  capacityU            Int              @default(42)
+  location             String?
+  notes                String?
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  visualizationConfigs Json?
+  rackType             RackType         @default(NORMAL)
+  devices              DeviceExternal[]
+}
+
+model SystemConfiguration {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  category    String   @default("general")
+  isEncrypted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("SystemConfiguration")
+}
+
+model UserSession {
+  id         String   @id @default(cuid())
+  userId     String
+  token      String   @unique
+  ipAddress  String?
+  userAgent  String?
+  deviceType String?  @default("unknown")
+  browser    String?  @default("unknown")
+  os         String?  @default("unknown")
+  lastSeen   DateTime @default(now())
+  expiresAt  DateTime
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([token])
+  @@map("UserSession")
+}
+
+model DeviceControlSavedItem {
+  id           String   @id @default(cuid())
+  customName   String
+  deviceName   String
+  manufacturer String
+  partNumber   String
+  controlKey   String
+  controlData  Json
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("DeviceControlSavedItem")
+}
+
+model BackupSchedule {
+  id              String                    @id @default(cuid())
+  name            String
+  type            String
+  frequency       String
+  time            String
+  daysOfWeek      String?
+  daysOfMonth     String?
+  enabled         Boolean                   @default(true)
+  config          String
+  nextRun         DateTime?
+  lastRun         DateTime?
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
+  encrypt         Boolean                   @default(false)
+  encryptionKey   String?
+  retentionPolicy Json?
+  executions      BackupScheduleExecution[]
+
+  @@map("BackupSchedule")
+}
+
+model BackupScheduleExecution {
+  id         String         @id @default(cuid())
+  scheduleId String
+  startTime  DateTime
+  endTime    DateTime?
+  status     String
+  error      String?
+  result     String?
+  logs       String?
+  createdAt  DateTime       @default(now())
+  schedule   BackupSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  @@map("BackupScheduleExecution")
+}
+model AccessController {
+  id            String        @id @default(cuid())
+  name          String
+  ipAddress     String        @unique
+  status        String        @default("offline")
+  lockCount     Int           @default(0)
+  firmware      String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  doorStatus    String?
+  lockAddresses String?
+  lastSeen      DateTime?
+  macAddress    String?       @unique
+  freeHeap      Int?
+  logFileSize   Int?
+  spiffsTotal   Int?
+  spiffsUsed    Int?
+  totalHeap     Int?
+  uptime        String?
+  activityLogs  ActivityLog[]
+}
+
+model ActivityLog {
+  id           String           @id @default(cuid())
+  controllerId String
+  timestamp    DateTime
+  message      String
+  details      String?
+  createdAt    DateTime         @default(now())
+  controller   AccessController @relation(fields: [controllerId], references: [id], onDelete: Cascade)
+}
+model ModbusRTUConfig {
+  id        String   @id @default(cuid())
+  name      String
+  port      String   @unique
+  baudRate  Int      @default(9600)
+  dataBits  Int      @default(8)
+  parity    String   @default("none")
+  stopBits  Int      @default(1)
+  timeout   Int      @default(1000)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("ModbusRTUConfig")
+}
+
+model MqttConfiguration {
+  id                   String                  @id @default(cuid())
+  name                 String                  @unique
+  description          String?
+  brokerHost           String                  @default("18.143.215.113")
+  brokerPort           Int                     @default(9000)
+  protocol             MqttProtocol            @default(WEBSOCKET)
+  useSSL               Boolean                 @default(false)
+  clientId             String?
+  username             String?
+  password             String?
+  useAuthentication    Boolean                 @default(false)
+  keepAlive            Int                     @default(60)
+  connectTimeout       Int                     @default(10000)
+  reconnectPeriod      Int                     @default(5000)
+  cleanSession         Boolean                 @default(true)
+  maxReconnectAttempts Int                     @default(10)
+  defaultQos           Int                     @default(1)
+  retainMessages       Boolean                 @default(true)
+  willTopic            String?
+  willMessage          String?
+  willQos              Int                     @default(1)
+  willRetain           Boolean                 @default(false)
+  isActive             Boolean                 @default(false)
+  connectionStatus     MqttConnectionStatus    @default(DISCONNECTED)
+  lastConnectedAt      DateTime?
+  lastDisconnectedAt   DateTime?
+  connectionError      String?
+  messageCount         BigInt                  @default(0)
+  bytesSent            BigInt                  @default(0)
+  bytesReceived        BigInt                  @default(0)
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+  createdBy            String?
+  updatedBy            String?
+  connectionHistory    MqttConnectionHistory[]
+  messageLogs          MqttMessageLog[]
+  topicSubscriptions   MqttTopicSubscription[]
+
+  @@map("MqttConfiguration")
+}
+
+model MqttConnectionHistory {
+  id           String              @id @default(cuid())
+  configId     String
+  eventType    MqttConnectionEvent
+  timestamp    DateTime            @default(now())
+  details      String?
+  errorMessage String?
+  duration     Int?
+  config       MqttConfiguration   @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@index([configId, timestamp])
+  @@map("MqttConnectionHistory")
+}
+
+model MqttTopicSubscription {
+  id            String            @id @default(cuid())
+  configId      String
+  topic         String
+  qos           Int               @default(1)
+  isSubscribed  Boolean           @default(false)
+  lastMessageAt DateTime?
+  messageCount  BigInt            @default(0)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  config        MqttConfiguration @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@unique([configId, topic])
+  @@index([configId])
+  @@map("MqttTopicSubscription")
+}
+
+model MqttMessageLog {
+  id        String               @id @default(cuid())
+  configId  String
+  topic     String
+  payload   String
+  qos       Int
+  retained  Boolean              @default(false)
+  timestamp DateTime             @default(now())
+  direction MqttMessageDirection
+  config    MqttConfiguration    @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@index([configId, timestamp])
+  @@index([topic, timestamp])
+  @@map("MqttMessageLog")
+}
+
+model VLAN {
+  id          String          @id @default(cuid())
+  vlanId      Int             @unique
+  name        String
+  description String?
+  subnet      String?
+  gateway     String?
+  isActive    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@map("VLAN")
+}
+
+model DailyDeviceSummary {
+  id          String   @id @default(cuid())
+  date        DateTime @unique
+  deviceCount Int
+  totalLogs   Int
+  devices     Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("DailyDeviceSummary")
+}
+
+enum AlarmType {
+  CRITICAL
+  MAJOR
+  MINOR
+}
+
+enum AlarmKeyType {
+  DIRECT
+  THRESHOLD
+  BIT_VALUE
+}
+
+enum MaintenanceTarget {
+  Device
+  Rack
+}
+
+enum AlarmLogStatus {
+  ACTIVE
+  ACKNOWLEDGED
+  CLEARED
+}
+
+enum MqttProtocol {
+  TCP
+  WEBSOCKET
+  SECURE_TCP
+  SECURE_WEBSOCKET
+}
+
+enum MqttConnectionStatus {
+  DISCONNECTED
+  CONNECTING
+  CONNECTED
+  RECONNECTING
+  ERROR
+  BROKER_UNAVAILABLE
+}
+
+enum MqttConnectionEvent {
+  CONNECTED
+  DISCONNECTED
+  CONNECTION_FAILED
+  RECONNECTING
+  BROKER_UNAVAILABLE
+  AUTHENTICATION_FAILED
+}
+
+enum MqttMessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum RackType {
+  MAIN
+  NORMAL
+}

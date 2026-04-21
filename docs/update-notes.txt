@@ -1,0 +1,241 @@
+================================================================
+  Smartrack - Update Notes
+  Tanggal: 5 April 2026
+================================================================
+
+Dokumen ini merangkum semua perubahan yang dilakukan hari ini,
+mencakup perbaikan bug, fitur baru, dan kesiapan production deployment.
+
+
+================================================================
+  1. CLEANUP ZIGBEE (SISA)
+================================================================
+
+Melanjutkan cleanup Zigbee yang belum selesai di sesi sebelumnya.
+
+  - scripts/seed-permissions.js    -> hapus 4 entri permission Zigbee
+  - scripts/clear-db-safe.js       -> hapus 'zigbeeDevice' dari deleteMany
+  - scripts/clear-database.js      -> hapus blok zigbeeDevice.deleteMany()
+  - app/(dashboard)/info/page.tsx  -> hapus "Zigbee Devices" dari featureMap
+
+
+================================================================
+  2. LOGIN PAGE
+================================================================
+
+[Dropdown akun kondisional]
+Dropdown akun (admin/operator/viewer) sekarang hanya tampil jika env diset:
+
+  NEXT_PUBLIC_USER_LOGIN_DROPDOWN=true
+
+Default: false (hidden). Berguna untuk demo/testing internal saja.
+
+[Hapus fake stats & avatar]
+Panel kiri login sebelumnya menampilkan stat palsu ("2.000+ users", dll)
+dan avatar dummy. Diganti dengan daftar 4 fitur nyata aplikasi:
+
+  - Real-time MQTT Monitoring
+  - Multi-Rack Infrastructure
+  - Modbus & Protocol Integration
+  - Role-Based Access Control
+
+
+================================================================
+  3. COMMUNICATION SETUP PAGE
+================================================================
+
+Halaman /network/communication-setup diubah dari layout cards acak
+menjadi tampilan tab yang bersih:
+
+  Tab         | Konten
+  ------------|------------------------------
+  Protocols   | Ethernet + WiFi settings
+  MODBUS      | ModbusSettingsCard
+  SNMP        | SnmpSettingsCard
+
+Komponen yang tidak dipakai dihapus dari components/network/:
+  - ProtocolOutSettingsCard.tsx
+  - BacnetSettingsCard.tsx
+  - GooseSettingsCard.tsx
+  - ProfinetSettingsCard.tsx
+  - SparkplugSettingsCard.tsx
+  - EtherNetIPSettingsCard.tsx
+
+
+================================================================
+  4. BUG FIX: PDMTopologyWidget Infinite Loop
+================================================================
+
+Masalah: "Maximum update depth exceeded" di PDMTopologyWidget.tsx:240
+
+Root cause:
+  handleMqttMessage callback bergantung pada deviceStates di dependency
+  array useCallback. Setiap setDeviceStates dipanggil di dalam callback,
+  state berubah -> callback dibuat ulang -> useEffect subscription re-run
+  -> infinite loop.
+
+Fix:
+  - Tambah deviceStatesRef = useRef(deviceStates) untuk snapshot state
+  - Sync ref via useEffect(() => { deviceStatesRef.current = deviceStates })
+  - Gunakan deviceStatesRef.current di dalam handleMqttMessage
+  - Hapus deviceStates dari dependency array useCallback -> []
+
+
+================================================================
+  5. SEED SYSTEM OVERHAUL
+================================================================
+
+[seed-alarms.js (baru)]
+File scripts/seed-alarms.js dibuat dengan 32 konfigurasi alarm
+berdasarkan payload device nyata dari docs/payloadDevice.txt:
+
+  Device                  | Alarm
+  ------------------------|--------------------------------------------
+  smartrack-temphum-1 & 2 | temperature_high, temperature_low,
+                          | humidity_high, humidity_low, heat_index_high
+  smartrack-sensorvib-1   | vibration_high, tilt_detected, shock_detected
+  smartrack-ups-1         | battery_low, battery_critical,
+                          | ups_on_battery, ups_overload, input_voltage_low
+  smartrack-cooling-1     | supply_temp_high, return_temp_high,
+                          | cooling_delta_low, compressor_fault, fan_fault
+  smartrack-rpdu-1        | total_power_high, outlet_current_high, pdu_overload
+
+  Notifikasi -> admin@smartrack.com
+  Idempotent: skip-if-exists berdasarkan (deviceUniqId, customName)
+
+[seed-init.js - smart auto-detect]
+Dua flag manual ENABLE_USERS dan ENABLE_DASHBOARD diganti auto-detect:
+
+  const userCount = await client.user.count();
+  if (userCount === 0) { await seedUsers(); }
+
+  const dashboardCount = await client.dashboardLayout.count();
+  if (dashboardCount === 0) { await seedDashboard(); }
+
+Seed alarm otomatis dijalankan setiap kali (skip-if-exists di dalamnya).
+
+
+================================================================
+  6. BUG FIX: ALARM MANAGEMENT PAGE KOSONG
+================================================================
+
+Dua bug terpisah menyebabkan halaman /security/alarm-management kosong.
+
+Bug 1 - Permission key salah:
+  Sebelum : useMenuItemPermissions("alarms-alarm-management")
+  Sesudah : useMenuItemPermissions("security-alarm-management")
+
+Bug 2 - useEffect tidak pernah fire:
+  - isLoading diinisialisasi true
+  - Kondisi fetch: canView && !isLoading dengan isLoading di deps array
+  - Akibat: fetch tidak jalan karena kondisi tidak terpenuhi saat mount
+
+  Fix: isLoading diinisialisasi false, hapus !isLoading dari kondisi & deps.
+
+
+================================================================
+  7. PRODUCTION DEPLOYMENT
+================================================================
+
+Semua file deployment dikumpulkan dalam satu folder deploy/ agar rapi:
+
+  deploy/
+  |-- Makefile                  -> shortcut commands
+  |-- build-export.sh           -> build image + buat release folder
+  |-- deploy.sh                 -> deploy di target machine
+  |-- docker-compose.prod.yml   -> compose file (pakai pre-built image)
+  |-- entrypoint.sh             -> migrate + seed + start server
+  |-- README.md                 -> panduan lengkap deployment
+  |-- mosquitto/config/         -> konfigurasi MQTT broker
+  +-- postgres/init.sql         -> inisialisasi database
+
+
+[Alur Build (di dev machine)]
+
+  # 1. Setup QEMU untuk cross-platform build - sekali saja
+  docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
+  # 2. Build
+  bash deploy/build-export.sh --amd64    # server/laptop x86
+  bash deploy/build-export.sh --arm64    # Raspberry Pi
+
+Output: satu folder smartrack-release-{arch}-{timestamp}/ berisi:
+
+  smartrack-release-arm64-20260405_2321/
+  |-- smartrack-arm64-20260405_2321.tar.gz   <- Docker image
+  |-- .env                                   <- siap pakai
+  |-- deploy/
+  |-- prisma/
+  |-- scripts/
+  +-- templates/
+
+
+[Kirim ke target - 1 command]
+
+  scp -r smartrack-release-arm64-*/  user@TARGET_IP:~/smartrack
+
+
+[Deploy di target machine]
+
+  ssh user@TARGET_IP
+  cd ~/smartrack
+  bash deploy/deploy.sh
+
+Script deploy.sh otomatis:
+  1. Cek Docker tersedia
+  2. Deteksi IP server + konfirmasi
+  3. Buat/patch .env (generate JWT secret, set MQTT host, NEXTAUTH_URL)
+  4. Load Docker image dari tar.gz
+  5. docker compose up -d semua service
+  6. Health check loop sampai app ready
+  7. Print URL dashboard + kredensial default
+
+
+[docker-compose.prod.yml]
+Menggunakan pre-built image (bukan build:), volume path relatif:
+
+  image: ${SMARTRACK_IMAGE:-smartrack-app:amd64}
+  volumes:
+    - ../prisma:/app/prisma
+    - ../scripts:/app/scripts
+    - ../templates:/app/templates
+
+Port Mosquitto di-expose ke semua interface (bukan 127.0.0.1) agar
+IoT device dan browser bisa konek dari luar host.
+
+
+[entrypoint.sh]
+Disederhanakan - tidak lagi pakai flag file .seeded. Langsung jalankan
+seed-init.js setiap container start (aman karena sudah idempotent):
+
+  1. Tunggu PostgreSQL siap
+  2. prisma migrate deploy (fallback ke db push)
+  3. node scripts/seed-init.js
+  4. node server.js
+
+
+================================================================
+  8. STATUS REQUIREMENT
+================================================================
+
+Semua item di docs/requirement.md sudah selesai:
+
+  No  | Item                                          | Status
+  ----|-----------------------------------------------|-------
+  1.1 | Halaman Login - logo proporsional             | DONE
+  1.2 | Form Add Asset - searchable dropdown          | DONE
+  1.3 | Restyling MQTT Monitoring                     | DONE
+  2.1 | Widget Rack Server 3D - config update         | DONE
+  2.2 | Preview Rack - tampil konsisten               | DONE
+  2.3 | Konfigurasi Widget Tab Security               | DONE
+  2.4 | Konfigurasi Tab Analytic                      | DONE
+  2.5 | Konfigurasi Tab Power                         | DONE
+  2.6 | Live Preview Konfigurasi (PDM, UPS, Cooling)  | DONE
+  3.1 | Eliminasi Mock Data                           | DONE
+  3.2 | Detail Action Rack                            | DONE
+  3.3 | Dynamic MQTT Data                             | DONE
+  4.1 | Hapus Menu & Fitur (IP Pools, dll)            | DONE
+  4.2 | Cleanup end-to-end (page, API, components)    | DONE
+  5.1 | Real-Like Seed Data                           | DONE
+
+================================================================

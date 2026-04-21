@@ -1,0 +1,925 @@
+{
+  "userType": "smartrack",
+  "description": "Shared Smartrack rule chain presets",
+  "ruleChains": [
+    {
+      "name": "Automation SmartRack",
+      "description": "",
+      "nodes": [
+        {
+          "id": "1775571667161-0.9244881653772876",
+          "data": {
+            "label": "drycontact_dummy_1 - drycontactInput1",
+            "config": {
+              "key": "drycontactInput1",
+              "topic": "DRYCONTACT/1",
+              "deviceName": "drycontact_dummy_1",
+              "deviceType": "modular",
+              "isInternal": true,
+              "deviceUniqId": "internal-DRYCONTACT/1"
+            },
+            "nodeId": "1775571667161-0.9244881653772876"
+          },
+          "type": "inputNode",
+          "measured": {
+            "width": 180,
+            "height": 40
+          },
+          "position": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "1775571680501-0.08109388101728587",
+          "data": {
+            "label": "drycontact_dummy_1 - drycontactInput2",
+            "config": {
+              "key": "drycontactInput2",
+              "topic": "DRYCONTACT/1",
+              "deviceName": "drycontact_dummy_1",
+              "deviceType": "modular",
+              "isInternal": true,
+              "deviceUniqId": "internal-DRYCONTACT/1"
+            },
+            "nodeId": "1775571680501-0.08109388101728587"
+          },
+          "type": "inputNode",
+          "measured": {
+            "width": 180,
+            "height": 40
+          },
+          "position": {
+            "x": 0,
+            "y": 230
+          }
+        },
+        {
+          "id": "1775571687866-0.46334616407851226",
+          "data": {
+            "label": "drycontact_dummy_1 - drycontactInput5",
+            "config": {
+              "key": "drycontactInput5",
+              "topic": "DRYCONTACT/1",
+              "deviceName": "drycontact_dummy_1",
+              "deviceType": "modular",
+              "isInternal": true,
+              "deviceUniqId": "internal-DRYCONTACT/1"
+            },
+            "nodeId": "1775571687866-0.46334616407851226"
+          },
+          "type": "inputNode",
+          "measured": {
+            "width": 180,
+            "height": 40
+          },
+          "position": {
+            "x": 0,
+            "y": 460
+          }
+        },
+        {
+          "id": "1775571713729-0.607768663599255",
+          "data": {
+            "label": "relaymini_dummy_1 - relayMiniOutput1 (Turn ON)",
+            "config": {
+              "device": {
+                "_type": "modular",
+                "profile": {
+                  "name": "relaymini_dummy_1",
+                  "topic": "RELAYMINI/1",
+                  "device_type": "Modular",
+                  "part_number": "RELAYMINI",
+                  "manufacturer": "IOT"
+                },
+                "protocol_setting": {
+                  "address": 37,
+                  "protocol": "Modular",
+                  "device_bus": 0
+                }
+              },
+              "deviceName": "relaymini_dummy_1",
+              "deviceType": "modular",
+              "controlType": "on",
+              "selectedKey": "relayMiniOutput1"
+            },
+            "nodeId": "1775571713729-0.607768663599255"
+          },
+          "type": "controlNode",
+          "dragging": false,
+          "measured": {
+            "width": 200,
+            "height": 40
+          },
+          "position": {
+            "x": 330,
+            "y": 10
+          },
+          "selected": false
+        },
+        {
+          "id": "1775571843669-0.5944078755052401",
+          "data": {
+            "label": "drycontact_dummy_1 - drycontactInput5",
+            "config": {
+              "key": "drycontactInput5",
+              "topic": "DRYCONTACT/1",
+              "deviceName": "drycontact_dummy_1",
+              "deviceType": "modular",
+              "isInternal": true,
+              "deviceUniqId": "internal-DRYCONTACT/1"
+            },
+            "nodeId": "1775571843669-0.5944078755052401"
+          },
+          "type": "inputNode",
+          "dragging": false,
+          "measured": {
+            "width": 180,
+            "height": 40
+          },
+          "position": {
+            "x": 0,
+            "y": 720
+          },
+          "selected": false
+        },
+        {
+          "id": "1775571859166-0.18169944599432453",
+          "data": {
+            "label": "Send to: iot/door/command/192.168.1.210",
+            "config": {
+              "topic": "iot/door/command/192.168.1.210",
+              "payload": "{\n  \"lockAddress\": 1\n}",
+              "payloadMode": "custom"
+            },
+            "nodeId": "1775571859166-0.18169944599432453"
+          },
+          "type": "actionNode",
+          "dragging": false,
+          "measured": {
+            "width": 180,
+            "height": 40
+          },
+          "position": {
+            "x": 330,
+            "y": 720
+          },
+          "selected": false
+        },
+        {
+          "id": "1775574876314-0.7495320614798195",
+          "data": {
+            "label": "relaymini_dummy_1 - relayMiniOutput3 (Turn ON)",
+            "config": {
+              "device": {
+                "_type": "modular",
+                "profile": {
+                  "name": "relaymini_dummy_1",
+                  "topic": "RELAYMINI/1",
+                  "device_type": "Modular",
+                  "part_number": "RELAYMINI",
+                  "manufacturer": "IOT"
+                },
+                "protocol_setting": {
+                  "address": 37,
+                  "protocol": "Modular",
+                  "device_bus": 0
+                }
+              },
+              "deviceName": "relaymini_dummy_1",
+              "deviceType": "modular",
+              "controlType": "on",
+              "selectedKey": "relayMiniOutput3"
+            },
+            "nodeId": "1775574876314-0.7495320614798195"
+          },
+          "type": "controlNode",
+          "dragging": false,
+          "measured": {
+            "width": 200,
+            "height": 40
+          },
+          "position": {
+            "x": 330,
+            "y": 960
+          },
+          "selected": false
+        },
+        {
+          "id": "1775575717963-0.3161823460543308",
+          "data": {
+            "label": "Cooling (Schneider ACRMD4KI) - Serious_Alarm_Output",
+            "config": {
+              "key": "Serious_Alarm_Output",
+              "topic": "smartrack/cooling/1",
+              "deviceName": "Cooling (Schneider ACRMD4KI)",
+              "deviceUniqId": "smartrack-cooling-1"
+            },
+            "nodeId": "1775575717963-0.3161823460543308"
+          },
+          "type": "inputNode",
+          "measured": {
+            "width": 180,
+            "height": 40
+          },
+          "position": {
+            "x": 0,
+            "y": 950
+          }
+        },
+        {
+          "id": "1775575738552-0.6123696842613301",
+          "data": {
+            "label": "Cooling (Schneider ACRMD4KI) - Air_Return_Temperature_Setting",
+            "config": {
+              "key": "Air_Return_Temperature_Setting",
+              "topic": "smartrack/cooling/1",
+              "deviceName": "Cooling (Schneider ACRMD4KI)",
+              "deviceUniqId": "smartrack-cooling-1"
+            },
+            "nodeId": "1775575738552-0.6123696842613301"
+          },
+          "type": "inputNode",
+          "measured": {
+            "width": 180,
+            "height": 40
+          },
+          "position": {
+            "x": 0,
+            "y": 1180
+          }
+        },
+        {
+          "id": "1775575743639-0.5423918979460254",
+          "data": {
+            "label": "Cooling (Schneider ACRMD4KI) - Air_Outlet_Temperature_Setting",
+            "config": {
+              "key": "Air_Outlet_Temperature_Setting",
+              "topic": "smartrack/cooling/1",
+              "deviceName": "Cooling (Schneider ACRMD4KI)",
+              "deviceUniqId": "smartrack-cooling-1"
+            },
+            "nodeId": "1775575743639-0.5423918979460254"
+          },
+          "type": "inputNode",
+          "measured": {
+            "width": 180,
+            "height": 40
+          },
+          "position": {
+            "x": 0,
+            "y": 1410
+          }
+        },
+        {
+          "id": "1775575795567-0.6760649586807228",
+          "data": {
+            "label": "relaymini_dummy_1 - relayMiniOutput3 (Turn OFF)",
+            "config": {
+              "device": {
+                "_type": "modular",
+                "profile": {
+                  "name": "relaymini_dummy_1",
+                  "topic": "RELAYMINI/1",
+                  "device_type": "Modular",
+                  "part_number": "RELAYMINI",
+                  "manufacturer": "IOT"
+                },
+                "protocol_setting": {
+                  "address": 37,
+                  "protocol": "Modular",
+                  "device_bus": 0
+                }
+              },
+              "deviceName": "relaymini_dummy_1",
+              "deviceType": "modular",
+              "controlType": "off",
+              "selectedKey": "relayMiniOutput3"
+            },
+            "nodeId": "1775575795567-0.6760649586807228"
+          },
+          "type": "controlNode",
+          "dragging": false,
+          "measured": {
+            "width": 200,
+            "height": 40
+          },
+          "position": {
+            "x": 330,
+            "y": 1345
+          },
+          "selected": false
+        },
+        {
+          "id": "1775575867810-0.4507972883386646",
+          "data": {
+            "label": "relaymini_dummy_1 - relayMiniOutput1 (Turn OFF)",
+            "config": {
+              "device": {
+                "_type": "modular",
+                "profile": {
+                  "name": "relaymini_dummy_1",
+                  "topic": "RELAYMINI/1",
+                  "device_type": "Modular",
+                  "part_number": "RELAYMINI",
+                  "manufacturer": "IOT"
+                },
+                "protocol_setting": {
+                  "address": 37,
+                  "protocol": "Modular",
+                  "device_bus": 0
+                }
+              },
+              "deviceName": "relaymini_dummy_1",
+              "deviceType": "modular",
+              "controlType": "off",
+              "selectedKey": "relayMiniOutput1"
+            },
+            "nodeId": "1775575867810-0.4507972883386646"
+          },
+          "type": "controlNode",
+          "dragging": false,
+          "measured": {
+            "width": 200,
+            "height": 40
+          },
+          "position": {
+            "x": 330,
+            "y": 405
+          },
+          "selected": false
+        },
+        {
+          "id": "1775575935840-0.702526336559312",
+          "data": {
+            "label": "drycontact_dummy_1 - drycontactInput5",
+            "config": {
+              "key": "drycontactInput5",
+              "topic": "DRYCONTACT/1",
+              "deviceName": "drycontact_dummy_1",
+              "deviceType": "modular",
+              "isInternal": true,
+              "deviceUniqId": "internal-DRYCONTACT/1"
+            },
+            "nodeId": "1775575935840-0.702526336559312"
+          },
+          "type": "inputNode",
+          "measured": {
+            "width": 180,
+            "height": 40
+          },
+          "position": {
+            "x": 0,
+            "y": 1710
+          }
+        },
+        {
+          "id": "1775575947373-0.002230074078434674",
+          "data": {
+            "label": "relaymini_dummy_1 - relayMiniOutput2 (Turn ON)",
+            "config": {
+              "device": {
+                "_type": "modular",
+                "profile": {
+                  "name": "relaymini_dummy_1",
+                  "topic": "RELAYMINI/1",
+                  "device_type": "Modular",
+                  "part_number": "RELAYMINI",
+                  "manufacturer": "IOT"
+                },
+                "protocol_setting": {
+                  "address": 37,
+                  "protocol": "Modular",
+                  "device_bus": 0
+                }
+              },
+              "deviceName": "relaymini_dummy_1",
+              "deviceType": "modular",
+              "controlType": "on",
+              "selectedKey": "relayMiniOutput2"
+            },
+            "nodeId": "1775575947373-0.002230074078434674"
+          },
+          "type": "controlNode",
+          "dragging": false,
+          "measured": {
+            "width": 200,
+            "height": 40
+          },
+          "position": {
+            "x": 330,
+            "y": 1575
+          },
+          "selected": false
+        },
+        {
+          "id": "1775575953941-0.2453671557759851",
+          "data": {
+            "label": "relaymini_dummy_1 - relayMiniOutput2 (Turn OFF)",
+            "config": {
+              "device": {
+                "_type": "modular",
+                "profile": {
+                  "name": "relaymini_dummy_1",
+                  "topic": "RELAYMINI/1",
+                  "device_type": "Modular",
+                  "part_number": "RELAYMINI",
+                  "manufacturer": "IOT"
+                },
+                "protocol_setting": {
+                  "address": 37,
+                  "protocol": "Modular",
+                  "device_bus": 0
+                }
+              },
+              "deviceName": "relaymini_dummy_1",
+              "deviceType": "modular",
+              "controlType": "off",
+              "selectedKey": "relayMiniOutput2"
+            },
+            "nodeId": "1775575953941-0.2453671557759851"
+          },
+          "type": "controlNode",
+          "dragging": false,
+          "measured": {
+            "width": 200,
+            "height": 40
+          },
+          "position": {
+            "x": 330,
+            "y": 1805
+          },
+          "selected": true
+        },
+        {
+          "id": "auto05-timer",
+          "type": "timerSchedulerNode",
+          "position": {
+            "x": 650,
+            "y": 200
+          },
+          "data": {
+            "label": "10s Scheduler",
+            "config": {
+              "scheduleType": "interval",
+              "intervalSeconds": 10
+            },
+            "nodeId": "auto05-timer"
+          }
+        },
+        {
+          "id": "auto05-severity",
+          "type": "analyticsNode",
+          "position": {
+            "x": 900,
+            "y": 200
+          },
+          "data": {
+            "label": "Severity Aggregate",
+            "config": {
+              "nodeSubType": "severityAggregate",
+              "rules": [
+                {
+                  "deviceUniqId": "smartrack-ups-1",
+                  "selectedKey": "state_alarm_status_code",
+                  "operator": ">",
+                  "comparisonValue": "1",
+                  "severityLevel": "CRITICAL"
+                },
+                {
+                  "deviceUniqId": "smartrack-ups-1",
+                  "selectedKey": "battery_replace_indicator_code",
+                  "operator": ">",
+                  "comparisonValue": "1",
+                  "severityLevel": "CRITICAL"
+                },
+                {
+                  "deviceUniqId": "smartrack-cooling-1",
+                  "selectedKey": "Serious_Alarm_Output",
+                  "operator": "==",
+                  "comparisonValue": "1",
+                  "severityLevel": "CRITICAL"
+                },
+                {
+                  "deviceUniqId": "smartrack-cooling-1",
+                  "selectedKey": "Common_Alarm_Output",
+                  "operator": "==",
+                  "comparisonValue": "1",
+                  "severityLevel": "MINOR"
+                }
+              ]
+            },
+            "nodeId": "auto05-severity"
+          }
+        },
+        {
+          "id": "auto05-switch",
+          "type": "switchNode",
+          "position": {
+            "x": 1150,
+            "y": 200
+          },
+          "data": {
+            "label": "Switch Severity",
+            "config": {
+              "leftOperand": {
+                "type": "deviceField",
+                "deviceName": "Severity Aggregate",
+                "key": "severity"
+              },
+              "cases": [
+                {
+                  "id": "case-critical",
+                  "label": "Critical",
+                  "operator": "==",
+                  "rightOperand": {
+                    "type": "staticValue",
+                    "value": "critical"
+                  }
+                },
+                {
+                  "id": "case-minor",
+                  "label": "Minor",
+                  "operator": "==",
+                  "rightOperand": {
+                    "type": "staticValue",
+                    "value": "minor"
+                  }
+                }
+              ],
+              "defaultCase": {
+                "label": "Normal/Default"
+              }
+            },
+            "nodeId": "auto05-switch"
+          }
+        },
+        {
+          "id": "auto05-red",
+          "type": "actionNode",
+          "position": {
+            "x": 1450,
+            "y": 100
+          },
+          "data": {
+            "label": "Publish RED to RGB",
+            "config": {
+              "topic": "command/rgb",
+              "payload": "{\"color\":\"red\"}",
+              "payloadMode": "custom"
+            },
+            "nodeId": "auto05-red"
+          }
+        },
+        {
+          "id": "auto05-yellow",
+          "type": "actionNode",
+          "position": {
+            "x": 1450,
+            "y": 200
+          },
+          "data": {
+            "label": "Publish YELLOW to RGB",
+            "config": {
+              "topic": "command/rgb",
+              "payload": "{\"color\":\"yellow\"}",
+              "payloadMode": "custom"
+            },
+            "nodeId": "auto05-yellow"
+          }
+        },
+        {
+          "id": "auto05-green",
+          "type": "actionNode",
+          "position": {
+            "x": 1450,
+            "y": 300
+          },
+          "data": {
+            "label": "Publish GREEN to RGB",
+            "config": {
+              "topic": "command/rgb",
+              "payload": "{\"color\":\"green\"}",
+              "payloadMode": "custom"
+            },
+            "nodeId": "auto05-green"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "1775571667161-0.9244881653772876-1775571713729-0.607768663599255",
+          "data": {
+            "value": "true",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== true",
+          "source": "1775571667161-0.9244881653772876",
+          "target": "1775571713729-0.607768663599255",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775571680501-0.08109388101728587-1775571713729-0.607768663599255",
+          "data": {
+            "value": "true",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== true",
+          "source": "1775571680501-0.08109388101728587",
+          "target": "1775571713729-0.607768663599255",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775571687866-0.46334616407851226-1775571713729-0.607768663599255",
+          "data": {
+            "value": "true",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== true",
+          "source": "1775571687866-0.46334616407851226",
+          "target": "1775571713729-0.607768663599255",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775571843669-0.5944078755052401-1775571859166-0.18169944599432453",
+          "data": {
+            "value": "true",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== true",
+          "source": "1775571843669-0.5944078755052401",
+          "target": "1775571859166-0.18169944599432453",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775575717963-0.3161823460543308-1775574876314-0.7495320614798195",
+          "data": {
+            "value": "1",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== 1",
+          "source": "1775575717963-0.3161823460543308",
+          "target": "1775574876314-0.7495320614798195",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775575738552-0.6123696842613301-1775574876314-0.7495320614798195",
+          "data": {
+            "value": "28",
+            "edgeType": "condition",
+            "operator": ">"
+          },
+          "type": "custom",
+          "label": "> 28",
+          "source": "1775575738552-0.6123696842613301",
+          "target": "1775574876314-0.7495320614798195",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775575743639-0.5423918979460254-1775574876314-0.7495320614798195",
+          "data": {
+            "value": "25",
+            "edgeType": "condition",
+            "operator": ">"
+          },
+          "type": "custom",
+          "label": "> 25",
+          "source": "1775575743639-0.5423918979460254",
+          "target": "1775574876314-0.7495320614798195",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775575717963-0.3161823460543308-1775575795567-0.6760649586807228",
+          "data": {
+            "value": "0",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== 0",
+          "source": "1775575717963-0.3161823460543308",
+          "target": "1775575795567-0.6760649586807228",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775575738552-0.6123696842613301-1775575795567-0.6760649586807228",
+          "data": {
+            "value": "28",
+            "edgeType": "condition",
+            "operator": "<"
+          },
+          "type": "custom",
+          "label": "< 28",
+          "source": "1775575738552-0.6123696842613301",
+          "target": "1775575795567-0.6760649586807228",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775575743639-0.5423918979460254-1775575795567-0.6760649586807228",
+          "data": {
+            "value": "25",
+            "edgeType": "condition",
+            "operator": "<"
+          },
+          "type": "custom",
+          "label": "< 25",
+          "source": "1775575743639-0.5423918979460254",
+          "target": "1775575795567-0.6760649586807228",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775571667161-0.9244881653772876-1775575867810-0.4507972883386646",
+          "data": {
+            "value": "false",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== false",
+          "source": "1775571667161-0.9244881653772876",
+          "target": "1775575867810-0.4507972883386646",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775571680501-0.08109388101728587-1775575867810-0.4507972883386646",
+          "data": {
+            "value": "false",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== false",
+          "source": "1775571680501-0.08109388101728587",
+          "target": "1775575867810-0.4507972883386646",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775571687866-0.46334616407851226-1775575867810-0.4507972883386646",
+          "data": {
+            "value": "false",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== false",
+          "source": "1775571687866-0.46334616407851226",
+          "target": "1775575867810-0.4507972883386646",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775575935840-0.702526336559312-1775575947373-0.002230074078434674",
+          "data": {
+            "value": "true",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== true",
+          "source": "1775575935840-0.702526336559312",
+          "target": "1775575947373-0.002230074078434674",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "1775575935840-0.702526336559312-1775575953941-0.2453671557759851",
+          "data": {
+            "value": "false",
+            "edgeType": "condition",
+            "operator": "=="
+          },
+          "type": "custom",
+          "label": "== false",
+          "source": "1775575935840-0.702526336559312",
+          "target": "1775575953941-0.2453671557759851",
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "sourceHandle": null,
+          "targetHandle": null
+        },
+        {
+          "id": "e-timer-severity",
+          "source": "auto05-timer",
+          "target": "auto05-severity",
+          "type": "custom",
+          "label": "trigger",
+          "data": {
+            "edgeType": "success"
+          }
+        },
+        {
+          "id": "e-severity-switch",
+          "source": "auto05-severity",
+          "target": "auto05-switch",
+          "type": "custom",
+          "label": "success",
+          "data": {
+            "edgeType": "success"
+          }
+        },
+        {
+          "id": "e-switch-red",
+          "source": "auto05-switch",
+          "target": "auto05-red",
+          "type": "custom",
+          "label": "Critical",
+          "data": {
+            "edgeType": "condition",
+            "operator": "==",
+            "value": "critical"
+          }
+        },
+        {
+          "id": "e-switch-yellow",
+          "source": "auto05-switch",
+          "target": "auto05-yellow",
+          "type": "custom",
+          "label": "Minor",
+          "data": {
+            "edgeType": "condition",
+            "operator": "==",
+            "value": "minor"
+          }
+        },
+        {
+          "id": "e-switch-green",
+          "source": "auto05-switch",
+          "target": "auto05-green",
+          "type": "custom",
+          "label": "Normal/Default",
+          "data": {
+            "edgeType": "default"
+          }
+        }
+      ],
+      "isActive": false
+    }
+  ],
+  "totalRuleChains": 1,
+  "generatedAt": "2026-04-07T15:43:59.674Z"
+}

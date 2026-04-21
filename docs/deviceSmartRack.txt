@@ -1,0 +1,8 @@
+Cooling (Schneider ACRMD4KI)   - masuk di devices-external  192.168.1.103
+
+Rack PDU (UNITECH UT-D140205)  - masuk di devices-external  192.168.1.104
+
+UPS (APC SMART UPS SRT96BP)    - masuk di devices-external   192.168.1.105
+Nexabrick Vibration Sensor     - masuk di devices-external
+Nexabrick Temp hum             - masuk di devices-external
+Access Controller              - masuk di accessControllers 

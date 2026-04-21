@@ -1,0 +1,71 @@
+# Next.js build cache dan build files
+.next/
+out/
+
+# Dependency directories (will be installed fresh in container)
+node_modules/
+
+# Infrastructure files (not needed for build)
+infrastructure/
+
+# Archive files
+*.tar
+*.tar.gz
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Database files
+*.db
+*.sqlite
+
+# Testing
+coverage/
+
+# Git files
+.git/
+.gitignore
+
+# Documentation
+*.md
+*.pdf
+*.docx
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+
+# Cache files
+.cache/
+.pnpm-debug.log*
+.parcel-cache/
+
+# Temporary folders
+tmp/
+temp/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Large media files (handled via volume in docker-compose for persistence)
+# public/files/
+# public/images/
+# public/snapshots/
+
+# Backups
+backups/
+thermalmiddleware/

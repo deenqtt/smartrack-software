@@ -1,0 +1,15 @@
+Drycontact
+ 
+- DI1 untuk Limit Switch pintu depan
+- DI2 unuk limit switch pintu belakang
+- DI3 untuk Water Leak
+- DI4 untuk Water Leak 2
+- DI5 untuk FSS
+
+Relay Mini
+
+- Relay1 untuk Lightring
+- Relay2 untuk Rotary Buzzer
+- Relay3 untuk Cooling Fan
+
+

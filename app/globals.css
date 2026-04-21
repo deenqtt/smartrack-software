@@ -1,0 +1,379 @@
+@import "leaflet/dist/leaflet.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Leaflet CSS for OpenStreetMap (Source moved to top) */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* SCADA Global Status Colors */
+    --scada-running: #22c55e;
+    --scada-fault: #ef4444;
+    --scada-warning: #f59e0b;
+    --scada-idle: #94a3b8;
+    --scada-pipe-bg: #e2e8f0;
+  }
+
+  .dark {
+    --background: 222.2 84% 3.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 3.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 3.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    --sidebar-background: 222.2 84% 3.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217.2 91.2% 59.8%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217.2 32.6% 12%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 12%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* SCADA Global Status Colors */
+    --scada-running: #4ade80;
+    --scada-fault: #f87171;
+    --scada-warning: #fbbf24;
+    --scada-idle: #475569;
+    --scada-pipe-bg: #1e293b;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Outfit', sans-serif !important;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+
+  0%,
+  100% {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: #2563eb;
+  }
+}
+
+.animate-typing {
+  width: 38ch;
+  animation:
+    typing 2.5s steps(18, end),
+    blink-caret 0.75s step-end infinite;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #2563eb;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInLeft {
+  animation: fadeInLeft 0.8s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.8s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hide scrollbars utility class */
+.scrollbar-hide {
+  /* Firefox */
+  scrollbar-width: none;
+  /* Safari and Chrome */
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom dark-mode compatible badge classes */
+@layer components {
+
+  /* Success/Online State */
+  .badge-success {
+    @apply bg-green-100 text-green-800 border-green-300;
+  }
+
+  .dark .badge-success {
+    @apply bg-green-900/30 text-green-400 border-green-800;
+  }
+
+  /* Error/Offline State */
+  .badge-error {
+    @apply bg-red-100 text-red-800 border-red-300;
+  }
+
+  .dark .badge-error {
+    @apply bg-red-900/30 text-red-400 border-red-800;
+  }
+
+  /* Info/Neutral State */
+  .badge-info {
+    @apply bg-blue-100 text-blue-800 border-blue-300;
+  }
+
+  .dark .badge-info {
+    @apply bg-blue-900/30 text-blue-400 border-blue-800;
+  }
+
+  /* Data badge */
+  .badge-data {
+    @apply bg-muted text-muted-foreground border-border;
+  }
+
+  /* Status online large badge */
+  .status-online {
+    @apply text-green-700 bg-green-200/80;
+  }
+
+  .dark .status-online {
+    @apply text-green-300 bg-green-900/50;
+  }
+
+  /* Status offline large badge */
+  .status-offline {
+    @apply text-red-700 bg-red-200/80;
+  }
+
+  .dark .status-offline {
+    @apply text-red-300 bg-red-900/50;
+  }
+
+  /* Content text that should be readable in both themes */
+  .text-content {
+    @apply text-foreground;
+  }
+
+  /* MQTT data text */
+  .text-mqtt-data {
+    @apply text-foreground;
+  }
+
+  /* Data key labels */
+  .text-data-key {
+    @apply text-foreground font-medium;
+  }
+
+  /* Data values */
+  .text-data-value {
+    @apply text-muted-foreground;
+  }
+}
+
+/* AI Assistant Utilities */
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.1);
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.2);
+  }
+
+  .glass-card {
+    @apply bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 dark:border-slate-800/50 shadow-2xl transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    @apply bg-white/60 dark:bg-slate-900/60 border-white/40 dark:border-slate-700/60 shadow-primary/5;
+  }
+
+  .bg-grid-slate {
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+    background-size: 24px 24px;
+    @apply text-slate-200/50 dark:text-slate-800/50;
+  }
+
+  .active-indicator-line {
+    @apply absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1/2 bg-primary rounded-r-full shadow-[0_0_12px_rgba(var(--primary),0.8)];
+  }
+
+  .scale-in-center {
+    animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+
+  @keyframes scale-in-center {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+/* React Resizable Styles (Manual Override for Next.js Component Compatibility) */
+.react-resizable {
+  position: relative;
+}
+
+.react-resizable-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  border: 1px solid white;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  bottom: -5px;
+  right: -5px;
+  cursor: se-resize;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.react-resizable:hover .react-resizable-handle,
+.react-resizable-handle:hover {
+  opacity: 1;
+}
+
+@keyframes dash-flow {
+  from {
+    stroke-dashoffset: 64;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-dash-flow {
+  animation: dash-flow 0.5s linear infinite;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

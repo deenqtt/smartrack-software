@@ -1,0 +1,56 @@
+
+- Nexabrick Temp hum  1 dan 2
+
+Topic: smartrack/temphum/1QoS: 0
+{
+  "device_name": "temphum_dummy_1",
+  "protocol_type": "MODBUS RTU",
+  "comport": "/dev/ttyUSB0",
+  "modbus_address": 21,
+  "value": "{\"temp\": 25.4, \"hum\": 61.2}"
+}
+
+- Vibration 
+Topic: smartrack/vibration/1QoS: 0Retained
+
+{
+  "device_name": "vib_dummy_1",
+  "protocol_type": "MODBUS RTU",
+  "comport": "/dev/ttyUSB0",
+  "modbus_address": 11,
+  "value": "{\"x\": 0.02, \"y\": 0.01, \"z\": 0.03, \"activity\": 0}"
+}
+
+
+- UPS
+
+Topic: smartrack/ups/1QoS: 0Retained
+
+{
+  "device_name": "ups_dummy_1",
+  "protocol_type": "SNMP V2",
+  "ip_address": "192.168.0.151",
+  "value": "{\"ups_model\": \"APC Smart-UPS SRT 3000 XL\", \"ups_name\": \"UPS APC SRT3000XL\", \"ups_family_name\": \"Smart-UPS SRT\", \"ups_model_type\": \"SRT3000XL\", \"ups_firmware_revision\": \"UPS 09.3 / ID18\", \"ups_manufacture_date\": \"2025-01-15\", \"ups_serial_number\": \"AS2515SRT3000\", \"ups_firmware_revision_2\": \"NMC 7.1.8\", \"ups_sku_number\": \"SRT3000XL\", \"ups_hardware_revision\": \"Rev 1\", \"ups_phase_config\": \"onePhaseInOut\", \"ups_phase_config_code\": 3, \"ups_energy_storage_type\": \"vrlaOrWetCells\", \"ups_energy_storage_type_code\": 2, \"ups_apparent_power_rating\": \"3000\", \"battery_status\": \"batteryNormal\", \"battery_status_code\": 2, \"battery_time_on_battery\": 0, \"battery_last_replace_date\": \"2025-02-01\", \"battery_capacity\": 100, \"battery_temperature_advanced\": 28, \"battery_replace_indicator\": \"noBatteryNeedsReplacing\", \"battery_replace_indicator_code\": 1, \"battery_num_of_packs\": 1, \"battery_num_of_bad_packs\": 0, \"battery_nominal_voltage\": 48, \"battery_actual_voltage_basic\": 54, \"battery_current_basic\": 0, \"battery_total_dc_current_basic\": 0, \"battery_full_capacity\": 100, \"battery_total_capacity\": 9, \"battery_temperature\": 28.0, \"battery_runtime_remaining\": 780, \"battery_nominal_voltage_highprec\": 48.0, \"battery_actual_voltage\": 54.1, \"battery_current\": 0.0, \"battery_total_dc_current\": 0.0, \"battery_health\": \"ok\", \"battery_health_code\": 2, \"battery_active_power\": 0, \"battery_extended_temperature\": 28.0, \"battery_maximum_module_temperature\": 29.0, \"battery_minimum_module_temperature\": 27.5, \"battery_maximum_cell_voltage\": 13.6, \"battery_minimum_cell_voltage\": 13.4, \"input_phase\": 1, \"input_voltage\": 230.1, \"input_max_voltage\": 231.5, \"input_min_voltage\": 228.8, \"input_frequency\": 50.0, \"input_line_fail_cause\": \"noTransfer\", \"input_line_fail_cause_code\": 1, \"input_nominal_frequency\": 50, \"input_nominal_voltage\": 230, \"input_bypass_nominal_frequency\": 50, \"input_bypass_nominal_voltage\": 230, \"input_total_apparent_power\": 1, \"input_total_active_power\": 1, \"input_bypass_total_apparent_power\": 0, \"input_bypass_total_active_power\": 0, \"input_energy_usage\": 128, \"input_dc_voltage\": 0, \"input_dc_current\": 0, \"input_nominal_dc_voltage\": 0, \"input_bypass_voltage\": 230.0, \"input_bypass_frequency\": 50.0, \"output_status\": \"onLine\", \"output_status_code\": 2, \"output_phase\": 1, \"system_status\": \"onLine\", \"system_status_code\": 2, \"internal_ups_temperature\": 31, \"output_voltage_basic\": 230, \"output_frequency_basic\": 50, \"output_load_basic\": 32, \"output_current_basic\": 4, \"output_redundancy\": 0, \"output_kva_capacity\": 3000, \"output_nominal_frequency\": 50, \"output_voltage\": 230.0, \"output_frequency\": 50.0, \"output_load\": 32.0, \"output_current\": 4.2, \"output_efficiency\": 964, \"output_efficiency_raw\": 964, \"output_efficiency_status\": \"ok\", \"output_efficiency_percent\": 96.4, \"output_energy_usage\": 117, \"output_active_power\": 910, \"output_apparent_power\": 980, \"state_output_flags_raw\": \"0001000000000000001000000000000000000000000000000000000000000000\", \"state_output_flags\": \"normal_on_line\", \"state_alarm_status\": \"noAlarms\", \"state_alarm_status_code\": 1, \"state_abnormal_conditions_raw\": \"00000000000000000000000000000000\", \"state_abnormal_conditions\": \"none\", \"state_smartups_specific_faults_raw\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"state_smartups_specific_faults\": \"none\", \"state_system_messages\": \"000\", \"state_total_time_on_battery\": \"0 days 00:00:00\", \"state_total_time_on_bypass\": \"0 days 00:00:00\", \"state_total_time_on_normal\": \"45 days 12:20:10\", \"state_number_of_times_on_battery\": 3, \"state_number_of_times_on_bypass\": 0, \"state_number_of_times_on_normal\": 1, \"state_ecomode\": \"upsNotOnEcoMode\", \"state_ecomode_code\": 2, \"state_lifecycle_management_raw\": \"0000000000000000\", \"state_lifecycle_management\": \"normal\", \"test_diagnostics_results\": \"ok\", \"test_diagnostics_results_code\": 1, \"test_last_diagnostics_date\": \"2026-04-08\", \"test_calibration_results\": \"ok\", \"test_calibration_results_code\": 1, \"test_calibration_date\": \"2026-03-15\", \"test_calibration_last_successful_date\": \"2026-03-15\", \"test_battery_last_successful_date\": \"2026-04-08\", \"test_battery_last_date\": \"2026-04-08\", \"test_battery_process_status\": \"ok\", \"test_battery_process_status_code\": 1, \"test_battery_condition_status\": \"batteryOK\", \"test_battery_condition_status_code\": 2, \"test_diagnostics_battery_interval\": \"every12weeks\", \"test_diagnostics_battery_interval_code\": 6, \"PollingDuration\": 0.42, \"Timestamp\": \"2026-04-09 10:15:00\"}"
+}
+
+- Cooling
+
+Topic: smartrack/cooling/1QoS: 0Retained
+
+{
+  "device_name": "cooling_dummy_1",
+  "protocol_type": "MODBUS RTU",
+  "comport": "/dev/ttyUSB0",
+  "modbus_address": 1,
+  "value": "{\"Condensation_Pump_Alarm_Mode\": 1, \"Air_Return_Temperature_Setting\": 24.0, \"Air_Outlet_Temperature_Setting\": 19.0, \"Min_Humidify_Setting\": 40.0, \"Max_Humidify_Setting\": 60.0, \"PTC_Heater_Function_Register\": 0, \"Condensation_Pump_Function_Register\": 0, \"High_Air_Return_Temperature_Alarm_Value_Setting\": 30.0, \"Low_Outlet_Air_Temperature_Alarm_Value_Setting\": 16.0, \"High_Outlet_Air_Temperature_Alarm_Value_Setting\": 24.0, \"Modbus_Address\": 1, \"Comm_Speed\": 2, \"Max_Fan_Speed\": 90, \"Min_Fan_Speed\": 40, \"Air_Return_Temperature\": 24.6, \"Air_Outlet_Temperature\": 19.3, \"Air_Return_Humidity\": 53.2, \"IDU_DC_Fan_Voltage\": 8.2, \"Discharge_Pressure\": 21.8, \"Suction_Pressure\": 8.9, \"Target_Frequency\": 65, \"Running_Frequency\": 63, \"Target_Evaporation_Temperature\": 10.5, \"Discharge_Temperature\": 47.1, \"Evaporation_Temperature\": 9.8, \"In_Coil_Temperature\": 17.4, \"Out_Coil_Temperature\": 13.9, \"IDU_Valve_Steps\": 120, \"Operation_Mode\": 0, \"Serious_Alarm_Output\": 0, \"Common_Alarm_Output\": 0, \"Condensation_Pump_Output\": 0, \"PTC_Heater_Output\": 0, \"IDU_Fan_Output\": 1, \"SV_For_Low_Temp_Kit_Output\": 0, \"AL49_Fire_Smoke_Alarm\": 0, \"AL50_High_Air_Return_Temperature\": 0, \"AL51_High_Air_Outlet_Temperature\": 0, \"AL52_Low_Air_Outlet_Temperature\": 0, \"AL53_Condensation_Pump_Failure\": 0, \"AL54_EEPROM_Failure\": 0, \"AL55_Water_On_Floor\": 0, \"AL56_Maintenance_Alarm_For_IDU_Fan\": 0, \"AL68_Air_Return_Humidity_Probe_Failure\": 0, \"AL69_Air_Return_Temperature_Probe_Failure\": 0, \"AL74_Air_Outlet_Temperature_Probe_Failure\": 0, \"AL86_High_Air_Return_Humidity\": 0, \"AL87_Low_Air_Return_Humidity\": 0, \"AL101_IDU_ODU_Communication_Failure\": 0, \"AL113_Coil_Inlet_Temperature_Probe_Failure\": 0, \"AL115_Coil_Outlet_Temperature_Probe_Failure\": 0, \"C123_High_Discharge_Pressure\": 0, \"C124_High_Pressure_Switch_Protection\": 0, \"C126_Low_Suction_Pressure\": 0, \"C128_High_Discharge_Temperature\": 0, \"C131_Memory_Storage_Failure_ODU\": 0, \"C132_Refrigerant_Leak\": 0, \"C133_Low_Exhaust_Pressure\": 0, \"C134_Environment_Temperature_Out_Of_Range\": 0, \"C135_High_Pressure_Sensor_Failure\": 0, \"C136_Low_Pressure_Sensor_Failure\": 0, \"C137_TH1_Discharge_Temperature_1_Open_Short\": 0, \"C138_TH2_Discharge_Temperature_2_Open_Short\": 0, \"C139_TH3_Suction_Temperature_1_Open_Short\": 0, \"C140_TH4_Suction_Temperature_2_Open_Short\": 0, \"C141_TH5_Subcool_Inlet_Open_Short\": 0, \"C144_TH8_Environment_Temperature_Open_Short\": 0, \"C149_Suction_Temperature_Sensor_Abnormality\": 0, \"C150_Discharge_Temperature_Sensor_Abnormality\": 0, \"C151_Low_Superheat_Protection\": 0, \"C153_Compressor_Current_Protection\": 0, \"C154_IPM_Module_Protection\": 0, \"C157_PFC_Module_Protection\": 0, \"C158_PFC_Module_Temperature_Sensor_Internal_Circuit_Exception\": 0, \"C159_PFC_Module_High_Temperature_Protection\": 0, \"C160_Input_Power_Exception_Failure\": 0, \"C161_Excessive_Input_Current_Protection\": 0, \"C162_VDC_High_Voltage_Protection\": 0, \"C163_VDC_Low_Voltage_Protection\": 0, \"C164_Drive_And_Module_Communication_Failure\": 0, \"C165_Compressor_Out_Of_Step_During_Running\": 0, \"C166_Current_Detection_Circuit_Failure\": 0, \"C167_Startup_Failed\": 0, \"C168_Compressor_Out_Of_Phase_Failure\": 0, \"C171_IPM_Module_Temperature_Sensor_Internal_Circuit_Abnormality\": 0, \"C172_IPM_Module_High_Temperature_Protection\": 0, \"ON_OFF_UNIT\": 1, \"PTC_Heater_Function\": 1, \"Condensation_Pump_Function\": 1}"
+}   
+
+- PDU
+
+Topic: smartrack/rackpdu/1QoS: 0
+{
+  "device_name": "pdu_dummy_1",
+  "protocol_type": "SNMP V2",
+  "ip_address": "192.168.0.151",
+  "value": "{\"inlet_voltage\": 230.4, \"output_frequency\": 50, \"output_voltage\": 230, \"output_current_1\": 7.9, \"output_active_power_1\": 6.9, \"output_power_factor_1\": 129, \"output_energy_1\": 23}"
+}

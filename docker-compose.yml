@@ -1,0 +1,172 @@
+# ============================================================
+#  Smartrack — Docker Compose (Production Stack)
+#
+#  Services:
+#    app       → Next.js 15 Smartrack (port 3500)
+#    postgres  → PostgreSQL 15 + TimescaleDB
+#    redis     → Redis (cache & BullMQ queue)
+#    mosquitto → Eclipse Mosquitto MQTT broker (TCP 1883 + WS 9000)
+#
+#  Usage:
+#    docker compose up -d --build
+# ============================================================
+
+services:
+  # ─── Main Application ──────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smartrack-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3030}:3030"
+    deploy:
+      resources:
+        limits:
+          memory: 1.5G
+          cpus: "1.5"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3030
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-smartrack}:${POSTGRES_PASSWORD:-smartrack_pass}@postgres:5432/${POSTGRES_DB:-smartrack_db}?schema=public
+      - REDIS_URL=redis://redis:6379/0
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+      # Env berikut dibaca browser (runtime), isi sesuai IP/domain server
+      - NEXT_PUBLIC_MQTT_HOST=${NEXT_PUBLIC_MQTT_HOST:-localhost}
+      - NEXT_PUBLIC_MQTT_PORT=${NEXT_PUBLIC_MQTT_PORT:-9000}
+      - MQTT_BROKER_URL=ws://mosquitto:9000
+      # Auth
+      - JWT_SECRET=${JWT_SECRET}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3030}
+      # Access Control ZKTeco middleware (jalan di host)
+      - ACCESSCONTROL_API_URL=${ACCESSCONTROL_API_URL:-http://host.docker.internal:8081}
+      - NEXT_PUBLIC_ACCESSCONTROL_API_URL=${NEXT_PUBLIC_ACCESSCONTROL_API_URL:-http://localhost:8081}
+      # License
+      - NEXT_PUBLIC_LICENSE_SERVER_URL=${NEXT_PUBLIC_LICENSE_SERVER_URL}
+      - LICENSE_SECRET=${LICENSE_SECRET}
+      - LICENSE_ENCRYPTION_KEY=${LICENSE_ENCRYPTION_KEY}
+      # AI
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - smartrack_logs:/app/logs
+      - smartrack_backups:/app/backups
+      - ./prisma:/app/prisma
+      - ./scripts:/app/scripts
+      - ./templates:/app/templates
+      - ./public/images:/app/public/images
+      - ./public/uploads:/app/public/uploads
+      - ./public/snapshots:/app/public/snapshots
+      - ./public/files:/app/public/files
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mosquitto:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3030/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+    networks:
+      - smartrack-net
+
+  # ─── PostgreSQL + TimescaleDB ───────────────────────────────
+  postgres:
+    image: timescale/timescaledb:latest-pg15
+    container_name: smartrack-postgres
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: "1.0"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-smartrack}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-smartrack_pass}
+      - POSTGRES_DB=${POSTGRES_DB:-smartrack_db}
+    volumes:
+      - smartrack_pg_data:/var/lib/postgresql/data
+      - ./deploy/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "127.0.0.1:${PG_HOST_PORT:-15432}:5432"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-smartrack} -d ${POSTGRES_DB:-smartrack_db}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - smartrack-net
+
+  # ─── Redis (Cache + BullMQ) ─────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: smartrack-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+    volumes:
+      - smartrack_redis_data:/data
+    ports:
+      - "127.0.0.1:${REDIS_HOST_PORT:-16379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    networks:
+      - smartrack-net
+
+  # ─── MQTT Broker (Mosquitto) ────────────────────────────────
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: smartrack-mosquitto
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.25"
+    volumes:
+      - ./deploy/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - smartrack_mqtt_data:/mosquitto/data
+      - smartrack_mqtt_logs:/mosquitto/log
+    ports:
+      - "${MQTT_HOST_PORT:-1883}:1883" # MQTT TCP (IoT devices)
+      - "${MQTT_WS_PORT:-9000}:9000" # MQTT WebSocket (browser)
+    networks:
+      - smartrack-net
+
+# ─── Volumes ────────────────────────────────────────────────
+volumes:
+  smartrack_pg_data:
+  smartrack_redis_data:
+  smartrack_mqtt_data:
+  smartrack_mqtt_logs:
+  smartrack_backups:
+  smartrack_logs:
+
+# ─── Network ────────────────────────────────────────────────
+networks:
+  smartrack-net:
+    driver: bridge
