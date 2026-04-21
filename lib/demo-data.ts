@@ -502,7 +502,7 @@ export const DEMO_MENU_DATA = {
       icon: "LayoutDashboard",
       order: 1,
       isActive: true,
-      items: [
+      menuItems: [
         {
           id: "item-dashboard",
           name: "dashboard",
@@ -534,7 +534,7 @@ export const DEMO_MENU_DATA = {
       icon: "Server",
       order: 2,
       isActive: true,
-      items: [
+      menuItems: [
         {
           id: "item-devices-external",
           name: "devices-external",
@@ -566,7 +566,7 @@ export const DEMO_MENU_DATA = {
       icon: "Network",
       order: 3,
       isActive: true,
-      items: [
+      menuItems: [
         {
           id: "item-mqtt-monitoring",
           name: "mqtt-monitoring",
@@ -598,7 +598,7 @@ export const DEMO_MENU_DATA = {
       icon: "Shield",
       order: 4,
       isActive: true,
-      items: [
+      menuItems: [
         {
           id: "item-alarms",
           name: "alarms",
@@ -619,7 +619,7 @@ export const DEMO_MENU_DATA = {
       icon: "BarChart3",
       order: 5,
       isActive: true,
-      items: [
+      menuItems: [
         {
           id: "item-alarm-report",
           name: "alarm-report",
@@ -651,7 +651,7 @@ export const DEMO_MENU_DATA = {
       icon: "Wrench",
       order: 6,
       isActive: true,
-      items: [
+      menuItems: [
         {
           id: "item-maintenance",
           name: "maintenance",
@@ -672,7 +672,7 @@ export const DEMO_MENU_DATA = {
       icon: "Settings",
       order: 7,
       isActive: true,
-      items: [
+      menuItems: [
         {
           id: "item-user-management",
           name: "user-management",

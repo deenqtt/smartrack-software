@@ -10,7 +10,15 @@ export async function GET(request: NextRequest) {
   // DEMO_MODE: Return static menu without DB lookup
   if (process.env.DEMO_MODE === "true") {
     const { DEMO_MENU_DATA } = await import("@/lib/demo-data");
-    return NextResponse.json(DEMO_MENU_DATA);
+    // Ensure demo data structure matches expected return structure
+    const demoResponse = {
+        ...DEMO_MENU_DATA,
+        data: DEMO_MENU_DATA.data.map((group: any) => ({
+            ...group,
+            menuItems: group.menuItems
+        }))
+    };
+    return NextResponse.json(demoResponse);
   }
 
   try {
