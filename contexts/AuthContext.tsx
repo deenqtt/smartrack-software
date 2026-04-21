@@ -74,6 +74,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Setup session check based on JWT expiration
   const setupSessionCheck = useCallback(() => {
+    // DEMO_MODE: Never expire demo session
+    if (process.env.NEXT_PUBLIC_DEMO_MODE === "true") return;
     if (!user) return;
 
     clearSessionCheck();
@@ -222,6 +224,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Load user from existing session on app start
   const loadUserFromCookie = useCallback(async () => {
+    // DEMO_MODE: Set demo user instantly without any network call
+    if (process.env.NEXT_PUBLIC_DEMO_MODE === "true") {
+      setUser({ userId: "demo-user-id", email: "demo@smartrack.io", role: "ADMIN" as any, isPreview: false });
+      setAuthLoading(false);
+      setIsLoading(false);
+      return;
+    }
     try {
       const res = await fetch("/api/auth/me", {
         headers: { 'Cache-Control': 'no-cache' },
@@ -276,7 +285,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Disable unauthorized access checks during login flow
   // This prevents conflicts between login redirects and auth checks
   useEffect(() => {
-    if (!user && !isLoading && pathname !== '/login' && pathname !== '/register' && pathname !== '/license-required' && !pathname.startsWith('/api/') && !pathname.startsWith('/preview')) {
+    if (!user && !isLoading && process.env.NEXT_PUBLIC_DEMO_MODE !== "true" && pathname !== '/login' && pathname !== '/register' && pathname !== '/license-required' && !pathname.startsWith('/api/') && !pathname.startsWith('/preview')) {
       router.push('/login');
     }
   }, [user, isLoading, pathname, router]);
