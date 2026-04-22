@@ -15,9 +15,16 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  try {
-    const { id } = await params;
+  const { id } = await params;
 
+  if (process.env.DEMO_MODE === "true") {
+    const { DEMO_RACKS } = await import("@/lib/demo-data");
+    const rack = DEMO_RACKS.racks.find((r) => r.id === id);
+    if (!rack) return NextResponse.json({ error: "Rack not found" }, { status: 404 });
+    return NextResponse.json(rack.devices);
+  }
+
+  try {
     // Check if rack exists
     const rack = await prisma.rack.findUnique({
       where: { id }

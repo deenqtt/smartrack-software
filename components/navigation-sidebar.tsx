@@ -9,6 +9,7 @@ import {
   Loader2,
   AlertCircle,
   BlocksIcon,
+  Lock,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -44,6 +45,9 @@ import { useMenu } from "@/contexts/MenuContext";
 import { useRouter } from "next/navigation";
 import { getIconWithFallback } from "@/lib/icon-library";
 import { Badge } from "@/components/ui/badge";
+import { DemoRestrictedModal } from "@/components/demo-restricted-modal";
+
+const IS_DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 
 // Dynamic imports for better hydration
 const ThemeToggle = dynamic(
@@ -79,6 +83,7 @@ export const NavigationSidebar = memo(function NavigationSidebar({
   const router = useRouter();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
+  const [demoModal, setDemoModal] = useState<{ open: boolean; featureName?: string }>({ open: false });
 
   const { menuData, loading, error, refreshMenu } = useMenu();
   const { logout, user, isAuthenticated, isLoggingOut } = useAuth();
@@ -173,12 +178,54 @@ export const NavigationSidebar = memo(function NavigationSidebar({
           </div>
         ) : menuData?.menuGroups && menuData.menuGroups.length > 0 ? (
           menuData.menuGroups
-            .filter((group) => group.isActive === true) // Show only active groups
+            .filter((group) => group.isActive === true)
             .map((group, groupIndex) => {
               const groupId = group.id || `group-${groupIndex}`;
               const items = (group.menuItems || group.items || []).filter(
-                (item) => item.isActive !== false && item.path !== "/infrastructure/rack-monitor",
+                (item) => item.isActive !== false,
               );
+
+              const renderMenuItem = (item: any, itemIndex: number, isCollapsible = false) => {
+                const IconComponent = getIconComponent(item.icon || "BarChart3");
+                const isRestricted = IS_DEMO && item.demoRestricted === true;
+
+                const buttonClass = isCollapsible
+                  ? "group flex items-center gap-2 px-3 py-2 rounded-md w-full transition-all duration-200 text-sidebar-foreground hover:bg-muted/50 hover:pl-4 data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-bold data-[active=true]:shadow-sm overflow-hidden relative"
+                  : "group flex items-center gap-2 px-3 py-2 rounded-md w-full transition-colors text-sidebar-foreground hover:bg-muted/50 hover:text-sidebar-accent-foreground data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-medium data-[active=true]:border-l-2 data-[active=true]:border-l-primary";
+
+                return (
+                  <SidebarMenuItem key={item.id || itemIndex} className="relative">
+                    {isRestricted ? (
+                      <SidebarMenuButton
+                        isActive={false}
+                        className={`${buttonClass} opacity-60`}
+                        onClick={() => setDemoModal({ open: true, featureName: item.label })}
+                      >
+                        <Lock className="h-4 w-4 text-sidebar-foreground/40 shrink-0" />
+                        <span className={isCollapsible ? "ml-5" : ""}>{item.label}</span>
+                      </SidebarMenuButton>
+                    ) : (
+                      <SidebarMenuButton
+                        asChild
+                        isActive={pathname === item.path}
+                        className={buttonClass}
+                      >
+                        <Link href={item.path} prefetch={false}>
+                          {pathname === item.path && <div className="active-indicator-line" />}
+                          {isCollapsible ? (
+                            <span className="ml-5">{item.label}</span>
+                          ) : (
+                            <>
+                              <IconComponent className="h-4 w-4 text-sidebar-foreground/50 group-hover:text-sidebar-accent-foreground" />
+                              <span>{item.label}</span>
+                            </>
+                          )}
+                        </Link>
+                      </SidebarMenuButton>
+                    )}
+                  </SidebarMenuItem>
+                );
+              };
 
               // Special Case: Dashboard direct link (No dropdown)
               if (group.name === "dashboard" && items.length === 1) {
@@ -237,38 +284,7 @@ export const NavigationSidebar = memo(function NavigationSidebar({
                       <CollapsibleContent>
                         <SidebarGroupContent>
                           <SidebarMenu>
-                            {(group.menuItems || group.items || [])
-                               .filter((item) => item.isActive !== false && item.path !== "/infrastructure/rack-monitor")
-                               .map((item, itemIndex) => {
-                                const IconComponent = getIconComponent(
-                                  item.icon || "BarChart3",
-                                );
-                                return (
-                                  <SidebarMenuItem
-                                    key={item.id || itemIndex}
-                                    className="relative"
-                                  >
-                                    <SidebarMenuButton
-                                      asChild
-                                      isActive={pathname === item.path}
-                                      className="group flex items-center gap-2 px-3 py-2 rounded-md w-full transition-all duration-200 text-sidebar-foreground hover:bg-muted/50 hover:pl-4 data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-bold data-[active=true]:shadow-sm overflow-hidden relative"
-                                    >
-                                      <Link
-                                        href={item.path}
-                                        prefetch={false}
-                                      >
-                                        {pathname === item.path && (
-                                          <div className="active-indicator-line" />
-                                        )}
-                                        {/* <IconComponent className="h-4 w-4 text-sidebar-foreground/50 group-hover:text-sidebar-accent-foreground ml-4" /> */}
-                                        <span className="ml-5">
-                                          {item.label}
-                                        </span>
-                                      </Link>
-                                    </SidebarMenuButton>
-                                  </SidebarMenuItem>
-                                );
-                              })}
+                            {items.map((item, itemIndex) => renderMenuItem(item, itemIndex, true))}
                           </SidebarMenu>
                         </SidebarGroupContent>
                       </CollapsibleContent>
@@ -284,33 +300,7 @@ export const NavigationSidebar = memo(function NavigationSidebar({
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                       <SidebarMenu>
-                        {(group.menuItems || group.items || [])
-                          .filter((item) => item.isActive !== false && item.path !== "/infrastructure/rack-monitor") // Show only active items, exclude rack-monitor from sidebar
-                          .map((item, itemIndex) => {
-                            const IconComponent = getIconComponent(
-                              item.icon || "BarChart3",
-                            );
-                            return (
-                              <SidebarMenuItem
-                                key={item.id || itemIndex}
-                                className="relative"
-                              >
-                                <SidebarMenuButton
-                                  asChild
-                                  isActive={pathname === item.path}
-                                  className="group flex items-center gap-2 px-3 py-2 rounded-md w-full transition-colors text-sidebar-foreground hover:bg-muted/50 hover:text-sidebar-accent-foreground data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-medium data-[active=true]:border-l-2 data-[active=true]:border-l-primary"
-                                >
-                                  <Link
-                                    href={item.path}
-                                    prefetch={false} // Remove automatic prefetching - use global strategy
-                                  >
-                                    <IconComponent className="h-4 w-4 text-sidebar-foreground/50 group-hover:text-sidebar-accent-foreground" />
-                                    <span>{item.label}</span>
-                                  </Link>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                            );
-                          })}
+                        {items.map((item, itemIndex) => renderMenuItem(item, itemIndex, false))}
                       </SidebarMenu>
                     </SidebarGroupContent>
                   </SidebarGroup>
@@ -402,6 +392,12 @@ export const NavigationSidebar = memo(function NavigationSidebar({
         onConfirm={handleConfirmLogout}
         onCancel={handleCancelLogout}
         destructive={true}
+      />
+
+      <DemoRestrictedModal
+        open={demoModal.open}
+        featureName={demoModal.featureName}
+        onClose={() => setDemoModal({ open: false })}
       />
     </Sidebar>
   );
